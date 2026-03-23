@@ -1,1 +1,1 @@
-# Sistema-de-Registro-e-Monitoramento-de-Ocorrencias-Disciplinares
+# Sistema de Registro e Monitoramento de Ocorrencias Disciplinares
