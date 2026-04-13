@@ -25,7 +25,7 @@
       <h2>Login</h2>
       <form action="../backend/login.php" method="POST">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Digite seu email" required>
+        <input type="email" id="email" name="email" placeholder="Digite seu email" required autofocus>
 
         <label for="password">Senha</label>
         <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
