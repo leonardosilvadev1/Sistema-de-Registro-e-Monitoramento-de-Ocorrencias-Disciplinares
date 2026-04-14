@@ -4,7 +4,7 @@ include('database.php');
 
 if(empty($_POST['email']) || empty($_POST['password'])){
     $_SESSION['mensagem'] = "Preencha todos os campos!";
-    header('Location: tela_login.php');
+    header('Location: ../pages/tela_login.php');
     exit();
 }
 
@@ -24,12 +24,31 @@ $result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
 
 if($row && password_verify($password, $row['senha'])){
-    $_SESSION['email'] = $row['email'];
-    header('Location: painel.php');
-    exit();
+    switch ($row['cargo']) {
+        case 'Admin':
+            $_SESSION['email'] = $row['email'];
+            header('Location: ../pages/painel_admin.php');
+            exit();
+            break;
+        case 'Diretor':
+            $_SESSION['email'] = $row['email'];
+            header('Location: ../pages/painel_diretor.php');
+            exit();
+            break;
+        case 'Coordenador':
+            $_SESSION['email'] = $row['email'];
+            header('Location: ../pages/painel_coordenador.php');
+            exit();
+            break;
+        case 'DT':
+            $_SESSION['email'] = $row['email'];
+            header('Location: ../pages/painel_dt.php');
+            exit();
+            break;
+    }
 }else{
     $_SESSION['mensagem'] = "Login invalido";
-    header('Location: tela_login.php');
+    header('Location: ../pages/tela_login.php');
     exit();
 }
 ?>

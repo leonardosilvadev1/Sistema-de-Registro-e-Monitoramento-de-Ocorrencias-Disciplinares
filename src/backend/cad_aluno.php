@@ -4,7 +4,7 @@ include('database.php');
 
 if(empty($_POST['nome']) || empty($_POST['matricula']) || empty($_POST['curso']) || empty($_POST['serie']) || empty($_POST['tel_responsavel'])){
     $_SESSION['mensagem'] = "Preencha todos os campos!";
-    header('Location: tela_cad_aluno.php');
+    header('Location: ../pages/tela_cad_aluno.php');
     exit();
 }
 
@@ -19,11 +19,11 @@ mysqli_stmt_bind_param($stmt, "ssss", $name, $matricula, $curso, $serie, $tel_re
 
 if(mysqli_stmt_execute($stmt)){
     $_SESSION['mensagem'] = "Aluno cadastrado com sucesso!";
-    header('Location: tela_cad_aluno.php');
+    header('Location: ../pages/tela_cad_aluno.php');
     exit();
 } else {
     $_SESSION['mensagem'] = "Erro ao cadastrar aluno!";
-    header('Location: tela_cad_aluno.php');
+    header('Location: ../pages/tela_cad_aluno.php');
     exit();
 }
 ?>

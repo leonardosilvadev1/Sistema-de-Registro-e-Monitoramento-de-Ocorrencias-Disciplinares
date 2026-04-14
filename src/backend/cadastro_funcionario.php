@@ -4,7 +4,7 @@ include('database.php');
 
 if(empty($_POST['nome']) || empty($_POST['cargo']) || empty($_POST['email']) ||empty($_POST['senha'])){
     $_SESSION['mensagem'] = "Preencha todos os campos";
-    header('Location: tela_cad_func.php');
+    header('Location: ../pages/tela_cad_func.php');
     exit();
 }
 
@@ -25,6 +25,6 @@ if(mysqli_stmt_execute($stmt)){
     $_SESSION['mensagem'] = "Erro ao cadastrar!";
 }
 
-header('Location: tela_cad_func.php');
+header('Location: ../pages/tela_cad_func.php');
 exit();
 ?>
