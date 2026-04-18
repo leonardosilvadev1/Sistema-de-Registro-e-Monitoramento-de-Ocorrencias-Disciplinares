@@ -1,34 +1,186 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Cadastro e Gerenciamento de Ocorrências Estudantis</title>
-    <link rel="stylesheet" href="src/style/style.css">
+    <title>SIS-ROM</title>
     <link rel="shortcut icon" href="src/assets/images/Logo Projeto Sem Fundo.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        background-color: #ffffff;
+        color: #1a1a1b;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    nav {
+        height: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 8%;
+        border-bottom: 1px solid #d1d1d1;
+        background: #ffffff;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo {
+        font-size: 40px;
+        font-weight: 800;
+        color: rgb(4, 168, 4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 35px;
+        align-items: center;
+    }
+    
+    .btn-login {
+        background-color: rgb(0, 121, 36);
+        color: #ffffff;
+        padding: 10px 24px;
+        border-radius: 4px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 12px rgba(255, 159, 67, 0.3);
+    }
+
+    .btn-login:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(0, 180, 69, 0.4);
+    }
+
+    .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 50px 20px;
+        background: linear-gradient(180deg, #e9f5ee 0%, #ffffff 100%);
+    }
+
+    .hero h1 {
+        font-size: 4.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        letter-spacing: -2px;
+        color: #1a1a1b;
+    }
+
+    .hero h1 mark {
+        background: none;
+        color: rgb(4, 168, 4);
+    }
+
+    .hero p {
+        font-size: 30px;
+        color: #002e0f;
+        max-width: 750px;
+        margin-bottom: 40px;
+    }
+
+    .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 20px;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .feature-card {
+        padding: 40px;
+        border-radius: 12px;
+        background: #ffffff;
+        border: 1px solid #008a5c;
+        transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .feature-card:hover {
+        border-color: #2d7a4d;
+        transform: translateY(-5px);
+    }
+
+    .icon-box {
+        width: 50px;
+        height: 50px;
+        background: #76ffaf;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+    }
+
+    .feature-card h3 {
+        margin-bottom: 15px;
+        font-size: 25px;
+        color: #1a1a1b;
+    }
+
+    .feature-card p {
+        color: #5e5e5e;
+        font-size: 15px;
+    }
+</style>
+
 <body>
-    <header>
-        <nav>
-            <div class="home">
+    <nav>
+        <div class="logo">
+            <div class="logo-box">
                 <img src="src/assets/images/Logo Projeto Sem Fundo.png" style="height: 80px; width: 80px;" alt="Logo">
-                <h3>SIS-ROM</h3>
             </div>
-            <ul>
-                <a href="index.html">
-                    <li style="color: rgb(23, 157, 35);">Início</li>
-                </a>
-                <a href="src/pages/information.html">
-                    <li>Sobre</li>
-                </a>
-                <a href="src/pages/tela_login.php">
-                    <li style="color: rgb(207, 107, 0);">Login</li>
-                </a>
-            </ul>
-        </nav>
-    </header>
+            SIS-ROM
+        </div>
+        <div class="nav-links">
+            <a href="src/pages/tela_login.php" class="btn-login">Entrar</a>
+        </div>
+    </nav>
 
+    <section class="hero">
+        <h1>Gestão de ocorrências <mark>Escolares</mark></h1>
+        <p>A melhor opção para gerenciamento de ocorrências escolares da EEEP Manoel Mano!</p>
+    </section>
 
-    <script src="src/script/script.js"></script>
+    <div class="features-container" id="recursos">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="icon-box">⚡</div>
+                <h3>Agilidade no Registo</h3>
+                <p>Criação e registro de ocorrências em poucos cliques, trazendo menos burocracia para que possa focar no acompanhamento pedagógico.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box">📂</div>
+                <h3>Base de Dados Organizada</h3>
+                <p>Armazenamento seguro e organizado, trazendo dados por aluno, turma e entre outros.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box">📈</div>
+                <h3>Relatórios Rápidos</h3>
+                <p>Visualização de dados em tempo real com os dashboards e geração de relatórios instantâneos.</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
