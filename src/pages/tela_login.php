@@ -18,7 +18,7 @@
         }
 
         body{
-          background-color: rgb(4, 168, 4);
+          background-color: rgb(0, 121, 36);
         }
 
         main{
@@ -114,7 +114,39 @@
           outline: none;
           box-shadow: none;
         }
-    </style>
+
+        /*Responsividade*/
+        @media (max-width: 500px) {
+          .tela-login {
+            width: 300px;
+          }
+
+          .space-login .input input {
+            width: 200px;
+          }
+
+          .space-login .input button {
+            width: 200px;
+            border-radius: 10px;
+          }
+        }
+
+        @media (max-width: 350px) {
+          .tela-login {
+            height: 400px;
+            width: 250px;
+          }
+
+          .space-login .input input {
+            width: 150px;
+          }
+
+          .space-login .input button {
+            width: 150px;
+            border-radius: 10px;
+          }
+      }
+  </style>
 </head>
 <body>
     <main>

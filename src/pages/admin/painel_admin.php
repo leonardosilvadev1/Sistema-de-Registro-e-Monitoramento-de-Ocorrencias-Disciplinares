@@ -124,6 +124,39 @@ session_start();
             background-color: #dc3545;
             color: white;
         }
+
+        /*Responsividade*/
+        @media (max-width: 768px) {
+            .home img {
+                height: 80px;
+                width: 80px;
+            }
+            #menuBtn {
+                top: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+                font-size: 22px;
+            }
+
+            #sidebar {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .home img {
+                height: 40px;
+                width: 40px;
+            }
+            #menuBtn {
+                top: 10px;
+                right: 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -142,11 +175,11 @@ session_start();
             </div>
         
             <nav class="sidebar-nav">
-                <a href="painel_admin.php">Início</a>
-                <a href="#">Gerenciamento de Funcionários</a>
-                <a href="#">Dashboard</a>
-                <a href="#">Ocorrências</a>
-                <a href="#">Alunos</a>
+                <a href="painel_admin.php">🏠 Início</a>
+                <a href="#">👥 Gerenciamento de Funcionários</a>
+                <a href="#">📊 Dashboard</a>
+                <a href="#">📝 Ocorrências</a>
+                <a href="#">🎓 Alunos</a>
             </nav>
 
             <div class="sidebar-footer">
@@ -157,7 +190,8 @@ session_start();
     
 
     <main>
-        <h3 style="text-align: center; color: rgb(4, 168, 4); padding: 20px;">Bem-vindo ao Painel Administrativo <?php echo $_SESSION['email']; ?>! 👋</h3>
+        <h3 style="text-align: center; color: rgb(4, 168, 4); padding: 12px;">Bem-vindo ao Painel Administrativo, <?php echo $_SESSION['email']; ?>! 👋</h3>
+        <p style="text-align: center; color: rgb(71, 71, 71);">Veja o que está acontecendo hoje na EEEP Manoel Mano!</p>
     </main>
 
     <script>
