@@ -2,9 +2,9 @@
 session_start();
 include('database.php');
 
-if(empty($_POST['nome']) || empty($_POST['cargo']) || empty($_POST['email']) ||empty($_POST['senha'])){
+if(empty($_POST['name']) || empty($_POST['cargo']) || empty($_POST['email']) ||empty($_POST['password'])){
     $_SESSION['mensagem'] = "Preencha todos os campos";
-    header('Location: tela_cad_func.php');
+    header('Location: ../pages/admin/funcionarios.php');
     exit();
 }
 
@@ -25,6 +25,6 @@ if(mysqli_stmt_execute($stmt)){
     $_SESSION['mensagem'] = "Erro ao cadastrar!";
 }
 
-header('Location: tela_cad_func.php');
+header('Location: ../pages/admin/funcionarios.php');
 exit();
 ?>
