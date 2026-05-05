@@ -1,1 +1,0 @@
-console.log("Hello Sistema de Cadastro e Gerenciamento de Ocorrências Estudantis");

@@ -2,7 +2,7 @@
 session_start();
 include('database.php');
 
-if(empty($_POST['nome']) || empty($_POST['cargo']) || empty($_POST['email']) ||empty($_POST['senha'])){
+if(empty($_POST['name']) || empty($_POST['cargo']) || empty($_POST['email']) ||empty($_POST['password'])){
     $_SESSION['mensagem'] = "Preencha todos os campos";
     header('Location: ../pages/tela_cad_func.php');
     exit();

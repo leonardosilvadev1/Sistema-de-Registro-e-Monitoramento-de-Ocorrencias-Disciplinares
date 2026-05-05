@@ -27,22 +27,22 @@ if($row && password_verify($password, $row['senha'])){
     switch ($row['cargo']) {
         case 'Admin':
             $_SESSION['email'] = $row['email'];
-            header('Location: ../pages/painel_admin.php');
+            header('Location: ../pages/admin/painel_admin.php');
             exit();
             break;
         case 'Diretor':
             $_SESSION['email'] = $row['email'];
-            header('Location: ../pages/painel_diretor.php');
+            header('Location: ../pages/direcao/painel_diretor.php');
             exit();
             break;
         case 'Coordenador':
             $_SESSION['email'] = $row['email'];
-            header('Location: ../pages/painel_coordenador.php');
+            header('Location: ../pages/coordenacao/painel_coordenador.php');
             exit();
             break;
         case 'DT':
             $_SESSION['email'] = $row['email'];
-            header('Location: ../pages/painel_dt.php');
+            header('Location: ../pages/dt/painel_dt.php');
             exit();
             break;
     }
