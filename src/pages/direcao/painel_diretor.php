@@ -29,10 +29,10 @@ session_start();
         
             <nav class="sidebar-nav">
                 <a href="painel_diretor.php">🏠 Início</a>
-                <a href="#">👥 Gerenciamento de Funcionários</a>
+                <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
                 <a href="#">📊 Dashboard</a>
                 <a href="#">📝 Ocorrências</a>
-                <a href="#">🎓 Alunos</a>
+                <a href="alunos.php">🎓 Alunos</a>
             </nav>
 
             <div class="sidebar-footer">

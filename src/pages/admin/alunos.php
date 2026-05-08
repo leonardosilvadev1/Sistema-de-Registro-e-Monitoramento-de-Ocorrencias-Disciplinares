@@ -90,7 +90,7 @@ session_start();
                 echo "</tr>";
             }
         }else {
-            echo "<tr><td colspan='10'>Nenhum funcionário cadastrado!</td></tr>";
+            echo "<tr><td colspan='10'>Nenhum aluno cadastrado!</td></tr>";
         }
         ?>
     </table>
