@@ -35,7 +35,7 @@ session_start();
                 <a href="painel_coordenador.php">🏠 Início</a>
                 <a href="#">📊 Dashboard</a>
                 <a href="#">📝 Ocorrências</a>
-                <a href="#">🎓 Alunos</a>
+                <a href="alunos.php">🎓 Alunos</a>
             </nav>
 
             <div class="sidebar-footer">
