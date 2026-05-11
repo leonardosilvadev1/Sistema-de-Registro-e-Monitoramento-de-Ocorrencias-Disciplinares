@@ -1,9 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION['email'])){
-    header('Location: ../tela_login.php');
-    exit();
-}
+    if(!isset($_SESSION['email']) || !isset($_SESSION['cargo'])){
+        header('Location: ../tela_login.php');
+        exit();
+    }
 
 // dados vindos do buscar.php
 $alunos = $_SESSION['alunos'] ?? [];
