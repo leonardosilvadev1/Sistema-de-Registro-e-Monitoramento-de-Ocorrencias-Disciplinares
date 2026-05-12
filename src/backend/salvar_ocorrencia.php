@@ -10,7 +10,7 @@ if(
     empty($_POST['data'])
 ){
     $_SESSION['mensagem'] = "Preencha todos os campos!";
-    header('Location: tela_ocorrencia.php');
+    header('Location: tela_cad_ocorrencia.php');
     exit();
 }
 
