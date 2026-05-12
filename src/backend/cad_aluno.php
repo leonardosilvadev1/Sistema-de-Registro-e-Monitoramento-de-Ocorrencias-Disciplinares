@@ -21,7 +21,7 @@ include('database.php');
     $tel_responsavel = $_POST['tel_responsavel'];
 
     $stmt = mysqli_prepare($conexao, "INSERT INTO aluno (nome, matricula, curso, serie, telefone_responsavel) VALUES (?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "sssss", $name, $matricula, $curso, $serie, $tel_responsavel);
+    mysqli_stmt_bind_param($stmt, "sssis", $name, $matricula, $curso, $serie, $tel_responsavel);
 
     if(mysqli_stmt_execute($stmt)){
         $_SESSION['mensagem'] = "Aluno cadastrado com sucesso!";

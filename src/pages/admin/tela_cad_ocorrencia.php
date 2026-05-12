@@ -122,7 +122,7 @@ unset($_SESSION['alunos'], $_SESSION['funcionarios']);
 
                 <div class="form-group full-width">
                     <label>Descrição Detalhada</label>
-                    <textarea name="descricao" rows="6" placeholder="Descreva os detalhes da ocorrência aqui" required style="resize: vertical;"></textarea>
+                    <textarea name="descricao" rows="6" placeholder="Descreva os detalhes da ocorrência aqui" style="resize: vertical;"></textarea>
                 </div>
 
                 <div class="full-width" style="text-align: right;">

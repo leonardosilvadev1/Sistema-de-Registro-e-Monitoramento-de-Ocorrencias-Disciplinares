@@ -77,7 +77,7 @@ session_start();
                     echo "<td>".$row['nome']."</td>";
                     echo "<td>".$row['matricula']."</td>";
                     echo "<td>".$row['curso']."</td>";
-                    echo "<td>".$row['serie']."</td>";
+                    echo "<td>".$row['serie']. "ºAno" ."</td>";
                     echo "<td>".$row['telefone_responsavel']."</td>";
                     echo "<td>
                         <a href='../../backend/deletar_aluno.php?id=".$row['id_aluno']."' 
