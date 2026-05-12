@@ -34,6 +34,12 @@ if(mysqli_stmt_execute($stmt)){
     $_SESSION['mensagem'] = "Erro ao cadastrar!";
 }
 
-header('Location: ../pages/admin/ocorrencias.php');
+if($_SESSION['cargo'] == 'Admin'){
+    header('Location: ../pages/admin/ocorrencias.php');
+} elseif($_SESSION['cargo'] == 'Diretor'){
+    header('Location: ../pages/direcao/ocorrencias.php');
+} elseif($_SESSION['cargo'] == 'Coordenador'){
+    header('Location: ../pages/coordenacao/ocorrencias.php');
+}
 exit();
 ?>

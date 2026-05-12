@@ -1,13 +1,13 @@
 <?php
 session_start();
-    if(!isset($_SESSION['email'])){
+    if(!isset($_SESSION['email']) || !isset($_SESSION['cargo'])){
         header('Location: ../tela_login.php');
         exit();
     }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,7 +66,7 @@ session_start();
         <?php
         include('../../backend/database.php');
 
-        $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno";
+        $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno WHERE serie BETWEEN 1 AND 3";
         $result = mysqli_query($conexao, $query);
 
         $row = mysqli_num_rows($result);
@@ -77,7 +77,7 @@ session_start();
                     echo "<td>".$row['nome']."</td>";
                     echo "<td>".$row['matricula']."</td>";
                     echo "<td>".$row['curso']."</td>";
-                    echo "<td>".$row['serie']."</td>";
+                    echo "<td>".$row['serie'] . "° Ano" ."</td>";
                     echo "<td>".$row['telefone_responsavel']."</td>";
                     echo "<td>
                         <a href='../../backend/deletar_aluno.php?id=".$row['id_aluno']."' 

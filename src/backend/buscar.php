@@ -5,7 +5,7 @@ include('database.php');
 if(isset($_POST['buscar_aluno'])){
     $nome = $_POST['aluno'];
 
-    $stmt = mysqli_prepare($conexao, "SELECT id_aluno, nome FROM aluno WHERE nome LIKE ?");
+    $stmt = mysqli_prepare($conexao, "SELECT id_aluno, nome FROM aluno WHERE nome LIKE ? AND serie BETWEEN 1 AND 3");
     $like = $nome . "%";
 
     mysqli_stmt_bind_param($stmt, "s", $like);
@@ -50,6 +50,12 @@ if(isset($_POST['func_escolhido'])){
     $_SESSION['func_id'] = $_POST['func_id'];
 }
 
-header('Location: ../pages/admin/tela_cad_ocorrencia.php');
+if($_SESSION['cargo'] == 'Admin'){
+    header('Location: ../pages/admin/tela_cad_ocorrencia.php');
+} elseif($_SESSION['cargo'] == 'Diretor'){
+    header('Location: ../pages/direcao/tela_cad_ocorrencia.php');
+} elseif($_SESSION['cargo'] == 'Coordenador'){
+    header('Location: ../pages/coordenacao/tela_cad_ocorrencia.php');
+}
 exit();
 ?>

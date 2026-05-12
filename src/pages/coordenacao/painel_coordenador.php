@@ -1,5 +1,9 @@
 <?php
 session_start();
+    if(!isset($_SESSION['email']) || !isset($_SESSION['cargo'])){
+        header('Location: ../tela_login.php');
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +34,7 @@ session_start();
             <nav class="sidebar-nav">
                 <a href="painel_coordenador.php">🏠 Início</a>
                 <a href="#">📊 Dashboard</a>
-                <a href="#">📝 Ocorrências</a>
+                <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>
             </nav>
 

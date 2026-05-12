@@ -4,7 +4,7 @@ include('database.php');
 
 if(empty($_POST['email']) || empty($_POST['password'])){
     $_SESSION['mensagem'] = "Preencha todos os campos!";
-    header('Location: tela_login.php');
+    header('Location: ../pages/tela_login.php');
     exit();
 }
 
