@@ -66,7 +66,7 @@ session_start();
         <?php
         include('../../backend/database.php');
 
-        $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno";
+        $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno WHERE serie BETWEEN 1 AND 3";
         $result = mysqli_query($conexao, $query);
 
         $row = mysqli_num_rows($result);
