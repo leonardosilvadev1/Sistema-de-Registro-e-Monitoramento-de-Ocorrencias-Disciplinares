@@ -81,6 +81,7 @@ unset($_SESSION['alunos'], $_SESSION['funcionarios']);
             </div>
         </div>
 
+        <a href="ocorrencias.php"><button style="margin-left: 15px;" type="submit" class="btn-submit">Voltar</button></a>
     </aside>
 
     <main class="ide-editor">

@@ -81,6 +81,7 @@ unset($_SESSION['alunos'], $_SESSION['funcionarios']);
             </div>
         </div>
 
+        <a href="ocorrencias.php"><button style="margin-left: 15px;" type="submit" class="btn-submit">Voltar</button></a>
     </aside>
 
     <main class="ide-editor">
@@ -124,7 +125,7 @@ unset($_SESSION['alunos'], $_SESSION['funcionarios']);
                     <label>Descrição Detalhada</label>
                     <textarea name="descricao" rows="6" placeholder="Descreva os detalhes da ocorrência aqui" style="resize: vertical;"></textarea>
                 </div>
-
+                
                 <div class="full-width" style="text-align: right;">
                     <button type="submit" class="btn-submit">Cadastrar</button>
                 </div>
