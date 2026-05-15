@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('database.php');
+/**@var mysqli $conexao */
 
 if (!isset($_GET['id'])) {
     die("ID do aluno não informado.");

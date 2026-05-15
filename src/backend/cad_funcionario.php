@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('database.php');
+/**@var mysqli $conexao */
 
     if(empty($_POST['name']) || empty($_POST['cargo']) || empty($_POST['email']) ||empty($_POST['password'])){
         $_SESSION['mensagem'] = "Preencha todos os campos";
