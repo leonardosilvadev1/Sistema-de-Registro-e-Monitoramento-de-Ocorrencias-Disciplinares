@@ -1,7 +1,5 @@
 <?php
   session_start();
-  include('../database.php');
-/**@var mysqli $conexao */
 ?>
 
 <!DOCTYPE html>

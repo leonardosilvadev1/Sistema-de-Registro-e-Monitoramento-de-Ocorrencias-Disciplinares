@@ -1,3 +1,6 @@
+<?php
+/**@var mysqli $conexao */
+?>
 <h2>Buscar Aluno</h2>
 
 <form method="POST" action="../../backend/buscar.php">
