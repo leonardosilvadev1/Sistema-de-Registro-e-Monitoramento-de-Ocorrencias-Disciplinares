@@ -2,16 +2,21 @@
 session_start();
 include('database.php');
 
-if(
+if (
     empty($_POST['fk_aluno_id']) ||
     empty($_POST['fk_funcionario_id']) ||
     empty($_POST['tipo']) ||
     empty($_POST['descricao']) ||
     empty($_POST['data'])
-){
+) {
     $_SESSION['mensagem'] = "Preencha todos os campos!";
-    header('Location: tela_cad_ocorrencia.php');
-    exit();
+    if ($_SESSION['cargo'] == 'Admin') {
+        header('Location: ../pages/admin/tela_cad_ocorrencia.php');
+    } elseif ($_SESSION['cargo'] == 'Diretor') {
+        header('Location: ../pages/direcao/tela_cad_ocorrencia.php');
+    } elseif ($_SESSION['cargo'] == 'Coordenador') {
+        header('Location: ../pages/coordenacao/tela_cad_ocorrencia.php');
+    }
 }
 
 $aluno = $_POST['fk_aluno_id'];
@@ -28,18 +33,17 @@ $stmt = mysqli_prepare($conexao, "
 
 mysqli_stmt_bind_param($stmt, "sssii", $data, $tipo, $descricao, $aluno, $func);
 
-if(mysqli_stmt_execute($stmt)){
+if (mysqli_stmt_execute($stmt)) {
     $_SESSION['mensagem'] = "Ocorrência cadastrada com sucesso!";
-}else{
+} else {
     $_SESSION['mensagem'] = "Erro ao cadastrar!";
 }
 
-if($_SESSION['cargo'] == 'Admin'){
+if ($_SESSION['cargo'] == 'Admin') {
     header('Location: ../pages/admin/ocorrencias.php');
-} elseif($_SESSION['cargo'] == 'Diretor'){
+} elseif ($_SESSION['cargo'] == 'Diretor') {
     header('Location: ../pages/direcao/ocorrencias.php');
-} elseif($_SESSION['cargo'] == 'Coordenador'){
+} elseif ($_SESSION['cargo'] == 'Coordenador') {
     header('Location: ../pages/coordenacao/ocorrencias.php');
 }
 exit();
-?>
