@@ -46,7 +46,7 @@ unset($_SESSION['alunos'], $_SESSION['funcionarios']);
                     <ul class="result-list">
                         <?php foreach ($alunos as $a): ?>
                             <li class="result-item">
-                                <form method="POST" action="../backend/buscar.php">
+                                <form method="POST" action="../../backend/buscar.php">
                                     <input type="hidden" name="aluno_id" value="<?php echo $a['id_aluno']; ?>">
                                     <input type="hidden" name="aluno_nome" value="<?php echo $a['nome']; ?>">
                                     <button type="submit" name="aluno_escolhido" class="btn-select-item">
