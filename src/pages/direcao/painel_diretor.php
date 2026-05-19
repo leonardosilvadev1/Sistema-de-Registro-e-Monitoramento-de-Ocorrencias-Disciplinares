@@ -34,8 +34,8 @@ session_start();
             <nav class="sidebar-nav">
                 <a href="painel_diretor.php">🏠 Início</a>
                 <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
-                <a href="#">📊 Dashboard</a>
-                <a href="#">📝 Ocorrências</a>
+                <a href="dashboard.php">📊 Dashboard</a>
+                <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>
             </nav>
 
@@ -44,12 +44,39 @@ session_start();
             </div>
         </aside>
     </div>
-    
 
     <main>
         <h3 style="text-align: center; color: rgb(4, 168, 4); padding: 12px;">Bem-vindo ao Painel da Direção, <?php echo $_SESSION['email']; ?>! 👋</h3>
         <p style="text-align: center; color: rgb(71, 71, 71);">Veja o que está acontecendo hoje na EEEP Manoel Mano!</p>
     </main>
+
+    <div class="carrossel">
+        <div class="carrossel-container" id="meuCarrossel">
+            <div class="carrossel-track" id="track">
+                <div class="carrossel-slide">
+                    <img src="#" alt="Img 1">
+                    <div class="slide-caption">Img 1</div>
+                </div>
+                <div class="carrossel-slide">
+                    <img src="#" alt="Img 2">
+                    <div class="slide-caption">Img 2</div>
+                </div>
+                <div class="carrossel-slide">
+                    <img src="#" alt="Img 3">
+                    <div class="slide-caption">Img 3</div>
+                </div>
+                <div class="carrossel-slide">
+                    <img src="#" alt="Img 4">
+                    <div class="slide-caption">Img 4</div>
+                </div>
+            </div>
+
+            <button class="nav-btn prev-btn" id="btnAnterior">&#10094;</button>
+            <button class="nav-btn next-btn" id="btnProximo">&#10095;</button>
+
+            <div class="carrossel-indicadores" id="indicadores"></div>
+        </div>
+    </div>
 
     <script>
         const menuBtn = document.getElementById('menuBtn');
@@ -78,6 +105,91 @@ session_start();
             if (e.key === 'Escape' && sidebar.classList.contains('active')) {
                 toggleMenu();
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.getElementById('track');
+            const slides = Array.from(track.children);
+            const btnProximo = document.getElementById('btnProximo');
+            const btnAnterior = document.getElementById('btnAnterior');
+            const containerIndicadores = document.getElementById('indicadores');
+
+            let indiceAtual = 0;
+            const tempoDeTransicao = 8000; // 8 segundos
+            let intervaloAutomatico;
+
+            slides.forEach((_, index) => {
+                const botao = document.createElement('button');
+                botao.classList.add('indicator');
+                if (index === 0) botao.classList.add('active');
+
+                botao.addEventListener('click', () => {
+                    moverParaSlide(index);
+                    reiniciarTemporizador();
+                });
+
+                containerIndicadores.appendChild(botao);
+            });
+
+            const indicadores = Array.from(containerIndicadores.children);
+
+            // Função principal para mover os slides
+            function moverParaSlide(index) {
+                track.style.transform = `translateX(-${index * 100}%)`;
+
+                indicadores.forEach(ind => ind.classList.remove('active'));
+                indicadores[index].classList.add('active');
+
+                indiceAtual = index;
+            }
+
+            // Função para ir para o próximo slide
+            function proximoSlide() {
+                let proximoIndice = indiceAtual + 1;
+                if (proximoIndice >= slides.length) {
+                    proximoIndice = 0;
+                }
+                moverParaSlide(proximoIndice);
+            }
+
+            // Função para ir para o slide anterior
+            function slideAnterior() {
+                let indiceAnterior = indiceAtual - 1;
+                if (indiceAnterior < 0) {
+                    indiceAnterior = slides.length - 1;
+                }
+                moverParaSlide(indiceAnterior);
+            }
+
+            // Configura a passagem automática a cada 8 segundos
+            function iniciarTemporizador() {
+                intervaloAutomatico = setInterval(proximoSlide, tempoDeTransicao);
+            }
+
+            // Reinicia o tempo se o usuário clicar nos botões manualmente
+            function reiniciarTemporizador() {
+                clearInterval(intervaloAutomatico);
+                iniciarTemporizador();
+            }
+
+            // Adiciona os eventos de clique aos botões
+            btnProximo.addEventListener('click', () => {
+                proximoSlide();
+                reiniciarTemporizador();
+            });
+
+            btnAnterior.addEventListener('click', () => {
+                slideAnterior();
+                reiniciarTemporizador();
+            });
+
+            //Pausa quando o mouse estiver sobre o carrossel
+            const container = document.getElementById('meuCarrossel');
+            container.addEventListener('mouseenter', () => clearInterval(intervaloAutomatico));
+            container.addEventListener('mouseleave', iniciarTemporizador);
+
+            // Inicia o carrossel assim que a página carrega
+            iniciarTemporizador();
         });
     </script>
 </body>
