@@ -95,7 +95,7 @@ session_start();
     ?>
 </table>
 
-    <a href="tela_cad_ocorrencia.php"><button name="adicionar" id="adicionar-ocorrencia">+</button></a>
+    <a href="tela_cad_ocorrencias.php"><button name="adicionar" id="adicionar-ocorrencia">+</button></a>
 
     <script>
         const menuBtn = document.getElementById('menuBtn');
