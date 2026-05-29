@@ -113,6 +113,7 @@ body {
 }
 
 #adicionar-funcionario {
+     position: absolute;
     height: 70px;
     width: 150px;
     bottom: 30px;
@@ -123,11 +124,12 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    position: absolute;
-    margin-bottom: 7%;
+
+    
 }
 
 #adicionar-aluno {
+     position: absolute;
     height: 70px;
     width: 150px;
     bottom: 30px;
@@ -138,11 +140,12 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    position: absolute;
-    margin-bottom: 7%;
+   
+    
 }
 
 #adicionar-ocorrencia {
+     position: absolute;
     height: 70px;
     width: 150px;
     bottom: 30px;
@@ -153,8 +156,8 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    position: absolute;
-    margin-bottom: 7%;
+   
+    
 }
 
 #form_modal {
