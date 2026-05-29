@@ -99,6 +99,17 @@ session_start();
 
     <a href="tela_cad_ocorrencia.php"><button name="adicionar" id="adicionar-ocorrencia">+</button></a>
 
+        <footer class="text-center text-white mt-5" style="background-color: green; padding: 15px;">
+        <p>&copy; 2026 SIS-ROM | Desenvolvido pela EEEP Manoel Mano</p>
+        <p>
+            <a href="https://www.instagram.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Instagram</a> |
+            <a href="https://www.facebook.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Facebook</a> |
+            <a href="mailto:contato@eeepmanoelmano.com" style="color: white; text-decoration: none; margin: 0 10px;">Contato</a>
+        </p>
+        
+    </footer>
+
+
     <script>
         const menuBtn = document.getElementById('menuBtn');
         const sidebar = document.getElementById('sidebar');

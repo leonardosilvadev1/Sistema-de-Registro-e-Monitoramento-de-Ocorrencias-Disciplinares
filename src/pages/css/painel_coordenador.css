@@ -146,3 +146,8 @@ body {
         font-size: 20px;
     }
 }
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

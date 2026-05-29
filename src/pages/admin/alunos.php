@@ -8,6 +8,7 @@ session_start();
     }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -135,6 +136,16 @@ session_start();
             <button class="button_modal" type="button" onclick="this.closest('dialog').close()">Cancelar</button>
         </form>
     </dialog>
+    
+        <footer class="text-center text-white mt-5" style="background-color: green; padding: 15px;">
+        <p>&copy; 2026 SIS-ROM | Desenvolvido pela EEEP Manoel Mano</p>
+        <p>
+            <a href="https://www.instagram.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Instagram</a> |
+            <a href="https://www.facebook.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Facebook</a> |
+            <a href="mailto:contato@eeepmanoelmano.com" style="color: white; text-decoration: none; margin: 0 10px;">Contato</a>
+        </p>
+    </footer>
+
 
 
     <script>

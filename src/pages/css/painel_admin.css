@@ -113,7 +113,6 @@ body {
 }
 
 #adicionar-funcionario {
-    position: fixed;
     height: 70px;
     width: 150px;
     bottom: 30px;
@@ -124,10 +123,11 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    position: absolute;
+    margin-bottom: 7%;
 }
 
 #adicionar-aluno {
-    position: fixed;
     height: 70px;
     width: 150px;
     bottom: 30px;
@@ -138,10 +138,11 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    position: absolute;
+    margin-bottom: 7%;
 }
 
 #adicionar-ocorrencia {
-    position: fixed;
     height: 70px;
     width: 150px;
     bottom: 30px;
@@ -152,6 +153,8 @@ body {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+    position: absolute;
+    margin-bottom: 7%;
 }
 
 #form_modal {
@@ -191,6 +194,12 @@ input, select {
     font-size: 17px;
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
 /*Responsividade*/
 @media (max-width: 768px) {
     .home img {
@@ -225,3 +234,4 @@ input, select {
         font-size: 20px;
     }
 }
+
