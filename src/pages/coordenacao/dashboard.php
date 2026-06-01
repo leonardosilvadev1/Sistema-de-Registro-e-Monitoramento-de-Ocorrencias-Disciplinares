@@ -32,8 +32,7 @@ session_start();
             </div>
         
             <nav class="sidebar-nav">
-                <a href="painel_diretor.php">🏠 Início</a>
-                <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
+                <a href="painel_coordenador.php">🏠 Início</a>
                 <a href="dashboard.php">📊 Dashboard</a>
                 <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>

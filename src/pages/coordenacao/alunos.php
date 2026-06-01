@@ -33,7 +33,7 @@ session_start();
         
             <nav class="sidebar-nav">
                 <a href="painel_coordenador.php">🏠 Início</a>
-                <a href="#">📊 Dashboard</a>
+                <a href="dashboard.php">📊 Dashboard</a>
                 <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>
             </nav>
