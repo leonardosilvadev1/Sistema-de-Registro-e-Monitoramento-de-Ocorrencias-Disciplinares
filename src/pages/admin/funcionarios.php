@@ -76,6 +76,10 @@ session_start();
                     echo "<td>".$row['cargo']."</td>";
                     echo "<td>".$row['email']."</td>";
                     echo "<td>
+                        <a href='../../backend/editar_funcionario.php?id=".$row['id_funcionario']."' 
+                            class='btn btn-primary btn-sm'>
+                            Editar
+                        </a>
                         <a href='../../backend/deletar_func.php?id=".$row['id_funcionario']."' 
                             class='btn btn-danger btn-sm'
                             onclick=\"return confirm('Tem certeza que deseja remover este funcionário?');\">

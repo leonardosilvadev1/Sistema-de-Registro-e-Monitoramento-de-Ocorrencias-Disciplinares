@@ -12,7 +12,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Funcionários</title>
-    <link rel="stylesheet" href="../css/painel_admin.css">
+    <link rel="stylesheet" href="../css/painel_diretor.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="shortcut icon" href="../../assets/images/Logo Projeto Sem Fundo.png" type="image/x-icon">
 </head>
@@ -76,6 +76,10 @@ session_start();
                     echo "<td>".$row['cargo']."</td>";
                     echo "<td>".$row['email']."</td>";
                     echo "<td>
+                        <a href='../../backend/editar_funcionario.php?id=".$row['id_funcionario']."' 
+                            class='btn btn-primary btn-sm'>
+                            Editar
+                        </a>
                         <a href='../../backend/deletar_func.php?id=".$row['id_funcionario']."' 
                             class='btn btn-danger btn-sm'
                             onclick=\"return confirm('Tem certeza que deseja remover este funcionário?');\">

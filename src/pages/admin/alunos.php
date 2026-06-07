@@ -80,6 +80,10 @@ session_start();
                     echo "<td>".$row['serie'] . "° Ano" ."</td>";
                     echo "<td>".$row['telefone_responsavel']."</td>";
                     echo "<td>
+                        <a href='../../backend/editar_aluno.php?id=".$row['id_aluno']."' 
+                            class='btn btn-primary btn-sm'>
+                            Editar
+                        </a>
                         <a href='../../backend/deletar_aluno.php?id=".$row['id_aluno']."' 
                             class='btn btn-danger btn-sm'
                             onclick=\"return confirm('Tem certeza que deseja remover este aluno?');\">

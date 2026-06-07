@@ -114,6 +114,88 @@ body {
     color: white;
 }
 
+#adicionar-funcionario {
+    position: fixed;
+    height: 70px;
+    width: 150px;
+    bottom: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    background-color: rgb(4, 117, 4);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#adicionar-aluno {
+    position: fixed;
+    height: 72px;
+    width: 70px;
+    bottom: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    background-color: rgb(4, 117, 4);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+}
+
+#adicionar-ocorrencia {
+    position: fixed;
+    height: 70px;
+    width: 150px;
+    bottom: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    background-color: rgb(4, 117, 4);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#form_modal {
+    height: 700px;
+    width: 500px;
+    border: none;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    gap: 5px;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.button_modal {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgb(4, 117, 4);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+}
+
 .carrossel{
     display: flex;
     justify-content: center;
@@ -251,7 +333,7 @@ body {
     }
 }
 
-/*Responsividade para páginas normais*/
+/*Responsividade*/
 @media (max-width: 768px) {
     .home img {
         height: 80px;

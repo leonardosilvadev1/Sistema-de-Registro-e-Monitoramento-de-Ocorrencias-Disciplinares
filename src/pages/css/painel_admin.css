@@ -116,44 +116,53 @@ body {
 
 #adicionar-funcionario {
     position: fixed;
-    height: 70px;
-    width: 150px;
+    height: 72px;
+    width: 70px;
     bottom: 30px;
     right: 30px;
     padding: 10px 20px;
     background-color: rgb(4, 117, 4);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
 }
 
 #adicionar-aluno {
     position: fixed;
-    height: 70px;
-    width: 150px;
+    height: 72px;
+    width: 70px;
     bottom: 30px;
     right: 30px;
     padding: 10px 20px;
     background-color: rgb(4, 117, 4);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
 }
 
 #adicionar-ocorrencia {
     position: fixed;
-    height: 70px;
-    width: 150px;
+    height: 72px;
+    width: 70px;
     bottom: 30px;
     right: 30px;
     padding: 10px 20px;
     background-color: rgb(4, 117, 4);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
 }
 
 #form_modal {
