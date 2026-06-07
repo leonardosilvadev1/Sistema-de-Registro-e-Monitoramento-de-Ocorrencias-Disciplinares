@@ -53,47 +53,52 @@ session_start();
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do funcionário">
     </div>
 
-    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <tr>
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Email</th>
-            <th>Ações</th>
-        </tr>
+    <div class="table-responsive-container">
+        <table class="table table-striped" style="margin: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Cargo</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include('../../backend/database.php');
 
-        <?php
-        include('../../backend/database.php');
+                $query = "SELECT id_funcionario, nome, cargo, email FROM funcionario";
+                $result = mysqli_query($conexao, $query);
 
-        $query = "SELECT id_funcionario, nome, cargo, email FROM funcionario";
-        $result = mysqli_query($conexao, $query);
+                $row = mysqli_num_rows($result);
 
-        $row = mysqli_num_rows($result);
+                if ($row > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                            echo "<td>".$row['nome']."</td>";
+                            echo "<td>".$row['cargo']."</td>";
+                            echo "<td>".$row['email']."</td>";
+                            echo "<td>
+                                <a href='../../backend/editar_funcionario.php?id=".$row['id_funcionario']."' 
+                                    class='btn btn-primary btn-sm'>
+                                    Editar
+                                </a>
+                                <a href='../../backend/deletar_func.php?id=".$row['id_funcionario']."' 
+                                    class='btn btn-danger btn-sm'
+                                    onclick=\"return confirm('Tem certeza que deseja remover este funcionário?');\">
+                                    Remover
+                                </a>
+                            </td>";
 
-        if ($row > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                    echo "<td>".$row['nome']."</td>";
-                    echo "<td>".$row['cargo']."</td>";
-                    echo "<td>".$row['email']."</td>";
-                    echo "<td>
-                        <a href='../../backend/editar_funcionario.php?id=".$row['id_funcionario']."' 
-                            class='btn btn-primary btn-sm'>
-                            Editar
-                        </a>
-                        <a href='../../backend/deletar_func.php?id=".$row['id_funcionario']."' 
-                            class='btn btn-danger btn-sm'
-                            onclick=\"return confirm('Tem certeza que deseja remover este funcionário?');\">
-                            Remover
-                        </a>
-                    </td>";
-
-                echo "</tr>";
-            }
-        }else {
-            echo "<tr><td colspan='10'>Nenhum funcionário cadastrado!</td></tr>";
-        }
-        ?>
-    </table>
+                        echo "</tr>";
+                    }
+                }else {
+                    echo "<tr><td colspan='10'>Nenhum funcionario cadastrado!</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
     <button name="adicionar" id="adicionar-funcionario">+</button>
     <dialog id="form_modal">

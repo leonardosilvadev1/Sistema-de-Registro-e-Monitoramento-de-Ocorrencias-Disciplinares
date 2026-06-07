@@ -53,51 +53,56 @@ session_start();
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do aluno">
     </div>
 
-    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <tr>
-            <th>Nome</th>
-            <th>Matrícula</th>
-            <th>Curso</th>
-            <th>Série</th>
-            <th>Telefone do Responsável</th>
-            <th>Ações</th>
-        </tr>
+    <div class="table-responsive-container">
+        <table class="table table-striped" style="margin: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th>Curso</th>
+                    <th>Série</th>
+                    <th>Telefone do Responsável</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include('../../backend/database.php');
 
-        <?php
-        include('../../backend/database.php');
+                $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno WHERE serie BETWEEN 1 AND 3";
+                $result = mysqli_query($conexao, $query);
 
-        $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno WHERE serie BETWEEN 1 AND 3";
-        $result = mysqli_query($conexao, $query);
+                $row = mysqli_num_rows($result);
 
-        $row = mysqli_num_rows($result);
+                if ($row > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                            echo "<td>".$row['nome']."</td>";
+                            echo "<td>".$row['matricula']."</td>";
+                            echo "<td>".$row['curso']."</td>";
+                            echo "<td>".$row['serie'] . "° Ano" ."</td>";
+                            echo "<td>".$row['telefone_responsavel']."</td>";
+                            echo "<td>
+                                <a href='../../backend/editar_aluno.php?id=".$row['id_aluno']."' 
+                                    class='btn btn-primary btn-sm'>
+                                    Editar
+                                </a>
+                                <a href='../../backend/deletar_aluno.php?id=".$row['id_aluno']."' 
+                                    class='btn btn-danger btn-sm'
+                                    onclick=\"return confirm('Tem certeza que deseja remover este aluno?');\">
+                                    Remover
+                                </a>
+                            </td>";
 
-        if ($row > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr>";
-                    echo "<td>".$row['nome']."</td>";
-                    echo "<td>".$row['matricula']."</td>";
-                    echo "<td>".$row['curso']."</td>";
-                    echo "<td>".$row['serie'] . "° Ano" ."</td>";
-                    echo "<td>".$row['telefone_responsavel']."</td>";
-                    echo "<td>
-                        <a href='../../backend/editar_aluno.php?id=".$row['id_aluno']."' 
-                            class='btn btn-primary btn-sm'>
-                            Editar
-                        </a>
-                        <a href='../../backend/deletar_aluno.php?id=".$row['id_aluno']."' 
-                            class='btn btn-danger btn-sm'
-                            onclick=\"return confirm('Tem certeza que deseja remover este aluno?');\">
-                            Remover
-                        </a>
-                    </td>";
-
-                echo "</tr>";
-            }
-        }else {
-            echo "<tr><td colspan='10'>Nenhum aluno cadastrado!</td></tr>";
-        }
-        ?>
-    </table>
+                        echo "</tr>";
+                    }
+                }else {
+                    echo "<tr><td colspan='10'>Nenhum aluno cadastrado!</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 
     <button name="adicionar" id="adicionar-aluno">+</button>
     <dialog id="form_modal">

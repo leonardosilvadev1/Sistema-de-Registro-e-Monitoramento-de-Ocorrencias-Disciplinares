@@ -52,49 +52,54 @@ session_start();
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do funcionário">
     </div>
 
-    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-    <tr>
-        <th>Data</th>
-        <th>Tipo</th>
-        <th>Descrição</th>
-        <th>Aluno</th>
-        <th>Funcionário</th>
-        <th>Ações</th>
-    </tr>
+    <div class="table-responsive-container">
+        <table class="table table-striped" style="margin: 0; width: 100%;">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Descrição</th>
+                    <th>Aluno</th>
+                    <th>Funcionário</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                include('../../backend/database.php');
+                $query = "SELECT o.id_ocorrencia, o.data, o.tipo_ocorrencia, o.descricao, a.nome AS nome_aluno, f.nome AS nome_funcionario 
+                          FROM ocorrencia o 
+                          INNER JOIN aluno a ON o.fk_aluno_id_aluno = a.id_aluno 
+                          INNER JOIN funcionario f ON o.fk_funcionario_id_funcionario = f.id_funcionario
+                          ORDER BY o.data DESC";
+                
+                $result = mysqli_query($conexao, $query);
 
-    <?php
-    include('../../backend/database.php');
-    $query = "SELECT o.id_ocorrencia, o.data, o.tipo_ocorrencia, o.descricao, a.nome AS nome_aluno, f.nome AS nome_funcionario 
-              FROM ocorrencia o 
-              INNER JOIN aluno a ON o.fk_aluno_id_aluno = a.id_aluno 
-              INNER JOIN funcionario f ON o.fk_funcionario_id_funcionario = f.id_funcionario
-              ORDER BY o.data DESC";
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                            echo "<td>".date('d/m/Y', strtotime($row['data']))."</td>";
+                            echo "<td>".$row['tipo_ocorrencia']."</td>";
+                            echo "<td>".$row['descricao']."</td>";
+                            echo "<td>".$row['nome_aluno']."</td>";
+                            echo "<td>".$row['nome_funcionario']."</td>";
+                            echo "<td>
+                                <a href='../../backend/deletar_ocorrencia.php?id=".$row['id_ocorrencia']."' 
+                                    class='btn btn-danger btn-sm'
+                                    onclick=\"return confirm('Tem certeza que deseja remover esta ocorrência?');\">
+                                    Remover
+                                </a>
+                            </td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='6' class='text-center'>Nenhuma ocorrência cadastrada!</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
     
-    $result = mysqli_query($conexao, $query);
-
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-                echo "<td>".date('d/m/Y', strtotime($row['data']))."</td>";
-                echo "<td>".$row['tipo_ocorrencia']."</td>";
-                echo "<td>".$row['descricao']."</td>";
-                echo "<td>".$row['nome_aluno']."</td>";
-                echo "<td>".$row['nome_funcionario']."</td>";
-                echo "<td>
-                    <a href='../../backend/deletar_ocorrencia.php?id=".$row['id_ocorrencia']."' 
-                        class='btn btn-danger btn-sm'
-                        onclick=\"return confirm('Tem certeza que deseja remover esta ocorrência?');\">
-                        Remover
-                    </a>
-                </td>";
-            echo "</tr>";
-        }
-    } else {
-        echo "<tr><td colspan='6' class='text-center'>Nenhuma ocorrência cadastrada!</td></tr>";
-    }
-    ?>
-</table>
-
     <a href="tela_cad_ocorrencias.php"><button name="adicionar" id="adicionar-ocorrencia">+</button></a>
 
     <script>
