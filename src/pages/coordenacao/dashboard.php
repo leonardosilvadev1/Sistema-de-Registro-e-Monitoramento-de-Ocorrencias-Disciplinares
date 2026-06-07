@@ -4,6 +4,8 @@ session_start();
         header('Location: ../tela_login.php');
         exit();
     }
+
+include('../../backend/consultas.php');
 ?>
 
 <!DOCTYPE html>
