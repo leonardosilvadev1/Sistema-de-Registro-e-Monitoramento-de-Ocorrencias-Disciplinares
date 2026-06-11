@@ -23,25 +23,19 @@ include('database.php');
     $stmt = mysqli_prepare($conexao, "INSERT INTO aluno (nome, matricula, curso, serie, telefone_responsavel) VALUES (?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "sssis", $name, $matricula, $curso, $serie, $tel_responsavel);
 
-    if(mysqli_stmt_execute($stmt)){
-        $_SESSION['mensagem'] = "Aluno cadastrado com sucesso!";
-        if($_SESSION['cargo'] == 'Admin'){
-            header('Location: ../pages/admin/alunos.php');
-        } elseif($_SESSION['cargo'] == 'Diretor'){
-            header('Location: ../pages/direcao/alunos.php');
-        } elseif($_SESSION['cargo'] == 'Coordenador'){
-            header('Location: ../pages/coordenacao/alunos.php');
+    try {
+        if(mysqli_stmt_execute($stmt)){
+            $_SESSION['mensagem'] = "Aluno cadastrado com sucesso!";
         }
-        exit();
-    } else {
-        $_SESSION['mensagem'] = "Erro ao cadastrar aluno!";
-        if($_SESSION['cargo'] == 'Admin'){
-            header('Location: ../pages/admin/alunos.php');
-        } elseif($_SESSION['cargo'] == 'Diretor'){
-            header('Location: ../pages/direcao/alunos.php');
-        } elseif($_SESSION['cargo'] == 'Coordenador'){
-            header('Location: ../pages/coordenacao/alunos.php');
-        }
-        exit();
+    } catch(mysqli_sql_exception $e){
+        $_SESSION['mensagem'] = "Matrícula já cadastrada!";
     }
+    if($_SESSION['cargo'] == 'Admin'){
+        header('Location: ../pages/admin/alunos.php');
+    } elseif($_SESSION['cargo'] == 'Diretor'){
+        header('Location: ../pages/direcao/alunos.php');
+    } elseif($_SESSION['cargo'] == 'Coordenador'){
+        header('Location: ../pages/coordenacao/alunos.php');
+    }
+    exit();
 ?>

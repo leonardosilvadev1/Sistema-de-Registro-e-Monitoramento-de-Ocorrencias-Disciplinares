@@ -77,3 +77,7 @@ if(isset($_SESSION['mensagem'])){
     <button type="submit">Cadastrar</button>
 
 </form>
+
+<?php
+echo password_hash("12345", PASSWORD_DEFAULT);
+?>
