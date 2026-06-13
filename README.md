@@ -45,7 +45,7 @@ Um sistema web simples para registrar, gerenciar e monitorar ocorrências discip
 2. Inicie o Apache e o MySQL via XAMPP/WAMP.
 3. Crie o banco de dados e importe o arquivo de esquema:
 
-   - Pelo phpMyAdmin: importe `backend/schema.sql`.
+   - Pelo phpMyAdmin: importe ou copie `database/Sisrom_db.sql`.
    - Ou via linha de comando MySQL:
 
 4. Configure as credenciais do banco em [backend/database.php](backend/database.php) (usuário, senha, nome do banco).
