@@ -58,5 +58,4 @@ if($_SESSION['cargo'] == 'Admin'){
     header('Location: ../pages/coordenacao/tela_cad_ocorrencia.php');
 }
 exit();
->>>>>>> developing_03
 ?>

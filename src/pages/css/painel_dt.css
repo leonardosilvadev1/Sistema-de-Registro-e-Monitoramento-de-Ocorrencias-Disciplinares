@@ -9,11 +9,32 @@ body {
     color: #333333;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    overflow-x: hidden;
+}
+
+.table-responsive-container {
+    width: 90%;
+    margin: 20px auto;
+    display: block;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.table-responsive-container table {
+    margin: 0 !important;
+    width: 100% !important;
+}
+
+@media (max-width: 991px) {
+    .table-responsive-container table {
+        min-width: 800px !important;
+    }
 }
 
 #menuBtn {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
@@ -114,14 +135,16 @@ body {
     color: white;
 }
 
-.carrossel{
+.carrossel {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    padding: 10px;
 }
 
 .carrossel-container {
-    width: 100%;
+    width: 90%;
     max-width: 800px;
     height: 450px;
     position: relative;
@@ -232,9 +255,8 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsividade para Painel carrossel */
-@media (max-width: 600px) {
-    .carousel-container {
+@media (max-width: 768px) {
+    .carrossel-container {
         height: 300px;
         border-radius: 16px;
     }
@@ -251,7 +273,35 @@ body {
     }
 }
 
-/*Responsividade*/
+@media (max-width: 500px) {
+    .carrossel-container {
+        height: 220px;
+        border-radius: 12px;
+    }
+
+    .nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        left: 10px;
+    }
+    
+    .next-btn {
+        right: 10px;
+        left: auto;
+    }
+
+    .slide-caption {
+        font-size: 1rem;
+        bottom: 25px;
+    }
+    
+    .indicator {
+        width: 8px;
+        height: 8px;
+    }
+}
+
 @media (max-width: 768px) {
     .home img {
         height: 80px;

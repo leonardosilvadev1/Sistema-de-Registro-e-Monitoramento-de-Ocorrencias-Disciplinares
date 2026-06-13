@@ -28,11 +28,10 @@ if (
     empty($_POST['fk_aluno_id']) ||
     empty($_POST['fk_funcionario_id']) ||
     empty($_POST['tipo']) ||
-    empty($_POST['descricao']) ||
     empty($_POST['data'])
 ) {
     $_SESSION['mensagem'] = "Preencha todos os campos!";
-    redirecionar_tela_cad(); // <-- estava faltando o exit() aqui no original
+    redirecionar_tela_cad();
 }
 
 $aluno     = (int) $_POST['fk_aluno_id'];

@@ -33,8 +33,8 @@ session_start();
         
             <nav class="sidebar-nav">
                 <a href="painel_dt.php">🏠 Início</a>
-                <a href="#">👥 Minha Turma</a>
-                <a href="#">📝 Ocorrências</a>
+                <a href="turma.php">👥 Minha Turma</a>
+                <a href="ocorrencias.php">📝 Ocorrências</a>
             </nav>
 
             <div class="sidebar-footer">
