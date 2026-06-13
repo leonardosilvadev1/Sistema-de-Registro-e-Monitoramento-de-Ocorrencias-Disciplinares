@@ -110,7 +110,6 @@ session_start();
 
     <button name="adicionar" id="adicionar-aluno">+</button>
 
-    <!-- =================== MODAL DE CADASTRO (original) =================== -->
     <dialog id="form_modal">
         <form action="../../backend/cad_aluno.php" method="POST">
             <label for="nome">Nome do Aluno</label>
@@ -149,7 +148,6 @@ session_start();
         </form>
     </dialog>
 
-    <!-- =================== MODAL DE EDIÇÃO (novo) =================== -->
     <div class="modal fade" id="modalEditarAluno" tabindex="-1" aria-labelledby="modalEditarAlunoLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -205,104 +203,6 @@ session_start();
       </div>
     </div>
 
-    <button name="adicionar" id="adicionar-aluno">+</button>
-
-    <!-- =================== MODAL DE CADASTRO (original) =================== -->
-    <dialog id="form_modal">
-        <form action="../../backend/cad_aluno.php" method="POST">
-            <label for="nome">Nome do Aluno</label>
-            <input type="text" id="nome" name="nome" required autofocus>
-            <br>
-
-            <label for="matricula">Número da Matrícula</label>
-            <input type="text" id="matricula" name="matricula" required>
-            <br>
-
-            <label for="curso">Curso</label>
-            <select name="curso" id="curso" required>
-                <option selected disabled>Selecione</option>
-                <option value="Enfermagem">Enfermagem</option>
-                <option value="Informática">Informática</option>
-                <option value="DS">Desenvolvimento de Sistemas</option>
-                <option value="Adm">Administração</option>
-                <option value="Comércio">Comércio</option>
-            </select>
-            <br>
-
-            <label for="serie">Série/Ano</label>
-            <select name="serie" id="serie" required>
-                <option selected disabled>Selecione</option>
-                <option value="1">1° Ano</option>
-                <option value="2">2° Ano</option>
-                <option value="3">3° Ano</option>
-            </select>
-            <br>
-
-            <label for="telefone_responsavel">Telefone do Responsável</label>
-            <input type="text" id="telefone_responsavel" name="tel_responsavel" required>
-
-            <button class="button_modal" type="submit">Salvar</button>
-            <button class="button_modal" type="button" onclick="this.closest('dialog').close()">Cancelar</button>
-        </form>
-    </dialog>
-
-    <!-- =================== MODAL DE EDIÇÃO (novo) =================== -->
-    <div class="modal fade" id="modalEditarAluno" tabindex="-1" aria-labelledby="modalEditarAlunoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <form action="../../backend/edit_aluno.php" method="POST">
-            <div class="modal-header" style="background-color: rgb(9, 105, 9); color: #fff;">
-              <h5 class="modal-title" id="modalEditarAlunoLabel">Editar Aluno</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="id_aluno" id="edit_aluno_id">
-
-              <div class="mb-3">
-                <label for="edit_aluno_nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="edit_aluno_nome" name="nome" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control" id="edit_aluno_matricula" name="matricula" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_curso" class="form-label">Curso</label>
-                <select class="form-select" id="edit_aluno_curso" name="curso" required>
-                  <option value="Enfermagem">Enfermagem</option>
-                  <option value="Informática">Informática</option>
-                  <option value="DS">Desenvolvimento de Sistemas</option>
-                  <option value="Adm">Administração</option>
-                  <option value="Comércio">Comércio</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_serie" class="form-label">Série</label>
-                <select class="form-select" id="edit_aluno_serie" name="serie" required>
-                  <option value="1">1° Ano</option>
-                  <option value="2">2° Ano</option>
-                  <option value="3">3° Ano</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_tel" class="form-label">Telefone do Responsável</label>
-                <input type="text" class="form-control" id="edit_aluno_tel" name="tel_responsavel" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-success">Salvar Alterações</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bootstrap JS (necessário para o modal de edição) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -355,10 +255,17 @@ session_start();
         }
         document.getElementById("searchInput").addEventListener("keyup", filterTable);
 
-        // Modal de Cadastro
-        const botaoAbrir = document.getElementById('adicionar-aluno');
-        const modal = document.getElementById('form_modal');
-        botaoAbrir.addEventListener('click', () => modal.showModal());
+        // --- CORREÇÃO DO MODAL DE CADASTRO ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const botaoAbrir = document.getElementById('adicionar-aluno');
+            const modal = document.getElementById('form_modal');
+
+            if (botaoAbrir && modal) {
+                botaoAbrir.addEventListener('click', () => {
+                    modal.showModal();
+                });
+            }
+        });
 
         // Modal de Edição - preencher campos
         document.querySelectorAll('.btn-editar-aluno').forEach(function (btn) {
