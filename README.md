@@ -43,7 +43,7 @@ Um sistema web simples para registrar, gerenciar e monitorar ocorrências discip
 
 1. Copie a pasta do projeto para o diretório público do servidor (ex.: `C:/xampp/htdocs/Sistema-de-Registro-e-Monitoramento-de-Ocorrencias-Disciplinares`).
 2. Inicie o Apache e o MySQL via XAMPP/WAMP.
-3. Crie o banco de dados e importe o arquivo de esquema:
+3. Crie o banco de dados sisrom e importe o arquivo de esquema:
 
    - Pelo phpMyAdmin: importe ou copie `database/Sisrom_db.sql`.
    - Ou via linha de comando MySQL:
