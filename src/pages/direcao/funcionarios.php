@@ -32,7 +32,7 @@ session_start();
             </div>
         
             <nav class="sidebar-nav">
-                <a href="painel_admin.php">🏠 Início</a>
+                <a href="painel_diretor.php">🏠 Início</a>
                 <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
                 <a href="dashboard.php">📊 Dashboard</a>
                 <a href="ocorrencias.php">📝 Ocorrências</a>
@@ -67,7 +67,7 @@ session_start();
                 <?php
                 include('../../backend/database.php');
 
-                $query = "SELECT id_funcionario, nome, cargo, email FROM funcionario";
+                $query = "SELECT id_funcionario, nome, cargo, email FROM funcionario WHERE cargo != 'Admin'";
                 $result = mysqli_query($conexao, $query);
 
                 $row = mysqli_num_rows($result);
