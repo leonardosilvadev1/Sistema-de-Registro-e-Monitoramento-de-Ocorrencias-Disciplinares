@@ -55,30 +55,42 @@ include("../../backend/consultas.php");
             </button>
         </div>
 
-        <!-- Cards Resumo -->
         <div class="cards-container">
-            <div class="indicator-card">
+            <div class="indicator-card border-blue">
                 <h3>Alunos Matriculados</h3>
                 <div class="value"><?php echo $totalAlunos; ?></div>
             </div>
-            <div class="indicator-card">
+            <div class="indicator-card border-green">
                 <h3>Ocorrências Totais</h3>
                 <div class="value"><?php echo $totalOcorrencias; ?></div>
             </div>
+            <div class="indicator-card border-orange">
+                <h3>Ocorrências no Mês</h3>
+                <div class="value"><?php echo $ocorrenciasMes; ?></div>
+            </div>
+            <div class="indicator-card border-purple">
+                <h3>Cursos Ativos</h3>
+                <div class="value"><?php echo $totalCursos; ?></div>
+            </div>
         </div>
 
-        <!-- Gráficos Gerados em Canvas Puro -->
         <div class="charts-container">
-            <div class="chart-box">
+            <div class="chart-box" id="boxOcorrenciasCurso">
                 <h3>Ocorrências por Curso</h3>
                 <div class="canvas-wrapper">
-                    <canvas id="canvasBarras" width="400" height="260"></canvas>
+                    <canvas id="canvasOcorrenciasCurso" width="400" height="260"></canvas>
                 </div>
             </div>
-            <div class="chart-box">
+            <div class="chart-box" id="boxPizza">
                 <h3>Percentual de Tipos de Ocorrências</h3>
                 <div class="canvas-wrapper">
                     <canvas id="canvasPizza" width="260" height="260"></canvas>
+                </div>
+            </div>
+            <div class="chart-box" id="boxAlunosCurso">
+                <h3>Distribuição de Alunos por Curso</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="canvasAlunosCurso" width="400" height="260"></canvas>
                 </div>
             </div>
         </div>
@@ -92,10 +104,10 @@ include("../../backend/consultas.php");
         function toggleMenu() {
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
-            
+
             if (sidebar.classList.contains('active')) {
                 menuBtn.textContent = '✕';
-                menuBtn.style.backgroundColor = '#dc3545'; 
+                menuBtn.style.backgroundColor = '#dc3545';
                 menuBtn.style.color = 'rgb(255, 255, 255)';
             } else {
                 menuBtn.textContent = '☰';
@@ -104,7 +116,6 @@ include("../../backend/consultas.php");
             }
         }
 
-        // Abrir/Fechar ao clicar no botão
         menuBtn.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         window.addEventListener('keydown', (e) => {
@@ -127,17 +138,38 @@ include("../../backend/consultas.php");
         const dadosOcorrenciaLabels = <?php echo json_encode($tiposLabels); ?>;
         const dadosOcorrenciaValores = <?php echo json_encode($tiposDados); ?>;
 
-        const paletaCoresVerde = [
-            '#008000',
-            '#2e7d32',
-            '#4caf50',
-            '#81c784',
-            '#a5d6a7',
-            '#1b5e20' 
+        const dadosAlunosCursoLabels = <?php echo json_encode($alunosCursoLabels); ?>;
+        const dadosAlunosCursoValores = <?php echo json_encode($alunosCursoDados); ?>;
+
+        // Paleta de cores diversificada
+        const paletaCores = [
+            '#2196F3', // Azul
+            '#4CAF50', // Verde
+            '#FF9800', // Laranja
+            '#9C27B0', // Roxo
+            '#F44336', // Vermelho
+            '#00BCD4', // Ciano
+            '#FFC107', // Amarelo
+            '#E91E63'  // Rosa
         ];
 
+        // --- FUNÇÃO PARA GERAR LEGENDA ---
+        function gerarLegenda(containerId, labels, cores) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            let html = '<div class="chart-legend">';
+            for(let i = 0; i < labels.length; i++) {
+                const cor = cores[i % cores.length];
+                html += `<div class="legend-item"><div class="legend-color" style="background-color: ${cor}"></div>${labels[i]}</div>`;
+            }
+            html += '</div>';
+            
+            container.insertAdjacentHTML('beforeend', html);
+        }
+
         // --- RENDERIZADOR DE GRÁFICO DE BARRAS ---
-        function desenharGraficoBarras(idCanvas, labels, dados) {
+        function desenharGraficoBarras(containerId, idCanvas, labels, dados) {
             const canvas = document.getElementById(idCanvas);
             if (!canvas || dados.length === 0) return;
             const ctx = canvas.getContext('2d');
@@ -156,6 +188,7 @@ include("../../backend/consultas.php");
 
             ctx.clearRect(0, 0, largura, altura);
 
+            // Linhas de guia
             ctx.strokeStyle = '#f0f0f0';
             ctx.lineWidth = 1;
             for (let i = 0; i <= 4; i++) {
@@ -166,39 +199,42 @@ include("../../backend/consultas.php");
                 ctx.stroke();
             }
 
+            // Desenhando as Barras
             for (let i = 0; i < numeroBarras; i++) {
                 const alturaBarra = (dados[i] / valorMaximo) * (areaUtilAltura - 20);
                 const x = margemEsquerda + espacamento + (i * (larguraBarra + espacamento));
                 const y = altura - margemBase - alturaBarra;
 
-                const gradiente = ctx.createLinearGradient(x, y, x, altura - margemBase);
-                gradiente.addColorStop(0, '#008000');
-                gradiente.addColorStop(1, '#2e7d32');
-                ctx.fillStyle = gradiente;
-
+                ctx.fillStyle = paletaCores[i % paletaCores.length];
                 ctx.fillRect(x, y, larguraBarra, alturaBarra);
 
+                // Valores em cima da barra
                 ctx.fillStyle = '#333333';
                 ctx.font = 'bold 12px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText(dados[i], x + (larguraBarra / 2), y - 8);
 
+                // Labels do eixo X simplificados
                 ctx.fillStyle = '#6e6d6d';
                 ctx.font = '11px sans-serif';
                 const textoLabel = labels[i].length > 10 ? labels[i].substring(0, 8) + '..' : labels[i];
                 ctx.fillText(textoLabel, x + (larguraBarra / 2), altura - margemBase + 18);
             }
 
+            // Linha Base
             ctx.strokeStyle = '#cccccc';
             ctx.lineWidth = 1.5;
             ctx.beginPath();
             ctx.moveTo(margemEsquerda, altura - margemBase);
             ctx.lineTo(largura - 10, altura - margemBase);
             ctx.stroke();
+
+            // Gerar a Legenda
+            gerarLegenda(containerId, labels, paletaCores);
         }
 
         // --- RENDERIZADOR DE GRÁFICO DE PIZZA ---
-        function desenharGraficoPizza(idCanvas, labels, dados) {
+        function desenharGraficoPizza(containerId, idCanvas, labels, dados) {
             const canvas = document.getElementById(idCanvas);
             if (!canvas || dados.length === 0) return;
             const ctx = canvas.getContext('2d');
@@ -219,7 +255,7 @@ include("../../backend/consultas.php");
                 ctx.arc(centroX, centroY, raio, anguloInicial, anguloInicial + anguloFatia);
                 ctx.closePath();
 
-                ctx.fillStyle = paletaCoresVerde[i % paletaCoresVerde.length];
+                ctx.fillStyle = paletaCores[i % paletaCores.length];
                 ctx.fill();
 
                 ctx.strokeStyle = '#ffffff';
@@ -242,11 +278,15 @@ include("../../backend/consultas.php");
 
                 anguloInicial += anguloFatia;
             }
+
+            // Gerar a Legenda
+            gerarLegenda(containerId, labels, paletaCores);
         }
 
         window.onload = function() {
-            desenharGraficoBarras('canvasBarras', dadosCursoLabels, dadosCursoValores);
-            desenharGraficoPizza('canvasPizza', dadosOcorrenciaLabels, dadosOcorrenciaValores);
+            desenharGraficoBarras('boxOcorrenciasCurso', 'canvasOcorrenciasCurso', dadosCursoLabels, dadosCursoValores);
+            desenharGraficoPizza('boxPizza', 'canvasPizza', dadosOcorrenciaLabels, dadosOcorrenciaValores);
+            desenharGraficoBarras('boxAlunosCurso', 'canvasAlunosCurso', dadosAlunosCursoLabels, dadosAlunosCursoValores);
         };
     </script>
 </body>

@@ -46,7 +46,7 @@
 /* Grid dos Cards de Indicadores */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 25px;
     margin-bottom: 35px;
 }
@@ -56,7 +56,7 @@
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
-    border-bottom: 4px solid green;
+    border-bottom: 4px solid green; /* Fallback */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -82,6 +82,12 @@
     color: #222222;
     margin-top: 10px;
 }
+
+/* Adições de Cores para Cards */
+.border-blue { border-bottom-color: #2196F3 !important; }
+.border-green { border-bottom-color: #4CAF50 !important; }
+.border-orange { border-bottom-color: #FF9800 !important; }
+.border-purple { border-bottom-color: #9C27B0 !important; }
 
 /* Grid dos Painéis de Gráficos */
 .charts-container {
@@ -122,6 +128,31 @@
 canvas {
     display: block;
     max-width: 100%;
+}
+
+/* Legendas dos Gráficos */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    color: #555555;
+    font-weight: 500;
+}
+
+.legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    margin-right: 8px;
 }
 
 /* Overlay para dispositivos móveis */

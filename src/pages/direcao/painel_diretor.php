@@ -54,16 +54,16 @@ session_start();
         <div class="carrossel-container" id="meuCarrossel">
             <div class="carrossel-track" id="track">
                 <div class="carrossel-slide">
-                    <img src="#" alt="Img 1">
-                    <div class="slide-caption">Img 1</div>
+                    <img src="../../assets/images/EEEPMM-01.jpg" alt="Img 1">
+                    <div class="slide-caption">EEEP Manoel Mano</div>
                 </div>
                 <div class="carrossel-slide">
-                    <img src="#" alt="Img 2">
-                    <div class="slide-caption">Img 2</div>
+                    <img src="../../assets/images/EEEPMM-02.jpeg" alt="Img 2">
+                    <div class="slide-caption">EEEP Manoel Mano</div>
                 </div>
                 <div class="carrossel-slide">
-                    <img src="#" alt="Img 3">
-                    <div class="slide-caption">Img 3</div>
+                    <img src="../../assets/images/EEEPMM-03.jpg" alt="Img 3">
+                    <div class="slide-caption">EEEP Manoel Mano</div>
                 </div>
                 <div class="carrossel-slide">
                     <img src="#" alt="Img 4">
