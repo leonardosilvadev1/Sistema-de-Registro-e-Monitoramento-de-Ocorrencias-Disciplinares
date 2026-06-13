@@ -1,10 +1,10 @@
 <?php
 session_start();
+include('../../backend/database.php');
     if(!isset($_SESSION['email']) || !isset($_SESSION['cargo'])){
         header('Location: ../tela_login.php');
         exit();
     }
-    include('../../backend/database.php');
 
     // Listas para popular os selects do modal de edição
     $alunos_modal = mysqli_query($conexao, "SELECT id_aluno, nome FROM aluno ORDER BY nome");
@@ -17,7 +17,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Ocorrências</title>
-    <link rel="stylesheet" href="../css/painel_admin.css">
+    <link rel="stylesheet" href="../css/painel_diretor.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="shortcut icon" href="../../assets/images/Logo Projeto Sem Fundo.png" type="image/x-icon">
 </head>
@@ -32,14 +32,18 @@ session_start();
 
         <div id="overlay"></div>
         <aside id="sidebar">
-            <div class="sidebar-header">Menu Principal</div>
+            <div class="sidebar-header">
+                Menu Principal
+            </div>
+        
             <nav class="sidebar-nav">
-                <a href="painel_admin.php">🏠 Início</a>
+                <a href="painel_diretor.php">🏠 Início</a>
                 <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
                 <a href="dashboard.php">📊 Dashboard</a>
                 <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>
             </nav>
+
             <div class="sidebar-footer">
                 <a href="../../backend/logout.php"><button class="logout-btn">Sair</button></a>
             </div>
@@ -49,9 +53,9 @@ session_start();
     <h2 style="color: rgb(9, 105, 9); text-align: center; margin-top: 20px;">
         Ocorrências Registradas
     </h2>
-
+    
     <div class="container mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por qualquer informação da ocorrência">
+        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do funcionário">
     </div>
 
     <div class="table-responsive-container">
@@ -187,9 +191,10 @@ session_start();
         function toggleMenu() {
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
+            
             if (sidebar.classList.contains('active')) {
                 menuBtn.textContent = '✕';
-                menuBtn.style.backgroundColor = '#dc3545';
+                menuBtn.style.backgroundColor = '#dc3545'; 
                 menuBtn.style.color = 'rgb(255, 255, 255)';
             } else {
                 menuBtn.textContent = '☰';
@@ -197,28 +202,42 @@ session_start();
                 menuBtn.style.color = 'rgb(255, 255, 255)';
             }
         }
+
+        // Abrir/Fechar ao clicar no botão
         menuBtn.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) toggleMenu();
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                toggleMenu();
+            }
         });
 
+        // Função de busca
         function filterTable() {
             const input = document.getElementById("searchInput");
             const filter = input.value.toUpperCase();
             const table = document.querySelector(".table");
             const tr = table.getElementsByTagName("tr");
+
             for (let i = 1; i < tr.length; i++) {
                 let found = false;
+
                 const tds = tr[i].getElementsByTagName("td");
                 for (let j = 0; j < tds.length - 1; j++) {
-                    const td = tds[j];
-                    if (td && td.textContent.toUpperCase().indexOf(filter) > -1) {
+                const td = tds[j];
+                    if (td) {
+                        if (td.textContent.toUpperCase().indexOf(filter) > -1) {
                         found = true;
                         break;
+                        }
                     }
                 }
-                tr[i].style.display = found ? "" : "none";
+
+            if (found) {
+                tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
         document.getElementById("searchInput").addEventListener("keyup", filterTable);

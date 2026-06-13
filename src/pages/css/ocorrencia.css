@@ -194,6 +194,16 @@ label {
     color: #6E6E6E;
 }
 
+.form-group select {
+    background-color: #ffffff;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+    padding: 10px 12px;
+    font-size: 15px;
+    color: black;
+    outline: none;
+}
+
 input:disabled {
     background-color: white;
     color: #388e3c;

@@ -12,7 +12,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Funcionários</title>
-    <link rel="stylesheet" href="../css/painel_admin.css">
+    <link rel="stylesheet" href="../css/painel_diretor.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="shortcut icon" href="../../assets/images/Logo Projeto Sem Fundo.png" type="image/x-icon">
 </head>
@@ -27,14 +27,18 @@ session_start();
 
         <div id="overlay"></div>
         <aside id="sidebar">
-            <div class="sidebar-header">Menu Principal</div>
+            <div class="sidebar-header">
+                Menu Principal
+            </div>
+        
             <nav class="sidebar-nav">
-                <a href="painel_admin.php">🏠 Início</a>
+                <a href="painel_diretor.php">🏠 Início</a>
                 <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
                 <a href="dashboard.php">📊 Dashboard</a>
                 <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>
             </nav>
+
             <div class="sidebar-footer">
                 <a href="../../backend/logout.php"><button class="logout-btn">Sair</button></a>
             </div>
@@ -44,7 +48,7 @@ session_start();
     <h2 style="color: rgb(9, 105, 9); text-align: center; margin-top: 20px;">
         Funcionários Cadastrados
     </h2>
-
+    
     <div class="container mb-3">
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do funcionário">
     </div>

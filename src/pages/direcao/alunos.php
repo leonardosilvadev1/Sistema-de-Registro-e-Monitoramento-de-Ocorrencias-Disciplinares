@@ -12,8 +12,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciamento de Alunos</title>
-    <link rel="stylesheet" href="../css/painel_admin.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/painel_diretor.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../../assets/images/Logo Projeto Sem Fundo.png" type="image/x-icon">
 </head>
 <body>
@@ -30,9 +30,9 @@ session_start();
             <div class="sidebar-header">
                 Menu Principal
             </div>
-
+        
             <nav class="sidebar-nav">
-                <a href="painel_admin.php">🏠 Início</a>
+                <a href="painel_diretor.php">🏠 Início</a>
                 <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
                 <a href="dashboard.php">📊 Dashboard</a>
                 <a href="ocorrencias.php">📝 Ocorrências</a>
@@ -48,22 +48,24 @@ session_start();
     <h2 style="color: rgb(9, 105, 9); text-align: center; margin-top: 20px;">
         Alunos Cadastrados
     </h2>
-
+    
     <div class="container mb-3">
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do aluno">
     </div>
 
     <div class="table-responsive-container">
         <table class="table table-striped">
-            <tr>
-                <th>Nome</th>
-                <th>Matrícula</th>
-                <th>Curso</th>
-                <th>Série</th>
-                <th>Telefone do Responsável</th>
-                <th>Ações</th>
-            </tr>
-
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Matrícula</th>
+                    <th>Curso</th>
+                    <th>Série</th>
+                    <th>Telefone do Responsável</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
             <?php
             include('../../backend/database.php');
 
@@ -102,17 +104,17 @@ session_start();
                     <?php
                 }
             } else {
-                echo "<tr><td colspan='10'>Nenhum aluno cadastrado!</td></tr>";
+                echo "<tr><td colspan='6'>Nenhum aluno cadastrado!</td></tr>";
             }
             ?>
+            </tbody>
         </table>
     </div>
 
     <button name="adicionar" id="adicionar-aluno">+</button>
 
-    <!-- =================== MODAL DE CADASTRO (original) =================== -->
     <dialog id="form_modal">
-        <form action="../../backend/cad_aluno.php" method="POST">
+        <form action="../../backend/cad_aluno.php" method="POST" id="formCadastroAluno">
             <label for="nome">Nome do Aluno</label>
             <input type="text" id="nome" name="nome" required autofocus>
             <br>
@@ -149,7 +151,6 @@ session_start();
         </form>
     </dialog>
 
-    <!-- =================== MODAL DE EDIÇÃO (novo) =================== -->
     <div class="modal fade" id="modalEditarAluno" tabindex="-1" aria-labelledby="modalEditarAlunoLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -205,104 +206,6 @@ session_start();
       </div>
     </div>
 
-    <button name="adicionar" id="adicionar-aluno">+</button>
-
-    <!-- =================== MODAL DE CADASTRO (original) =================== -->
-    <dialog id="form_modal">
-        <form action="../../backend/cad_aluno.php" method="POST">
-            <label for="nome">Nome do Aluno</label>
-            <input type="text" id="nome" name="nome" required autofocus>
-            <br>
-
-            <label for="matricula">Número da Matrícula</label>
-            <input type="text" id="matricula" name="matricula" required>
-            <br>
-
-            <label for="curso">Curso</label>
-            <select name="curso" id="curso" required>
-                <option selected disabled>Selecione</option>
-                <option value="Enfermagem">Enfermagem</option>
-                <option value="Informática">Informática</option>
-                <option value="DS">Desenvolvimento de Sistemas</option>
-                <option value="Adm">Administração</option>
-                <option value="Comércio">Comércio</option>
-            </select>
-            <br>
-
-            <label for="serie">Série/Ano</label>
-            <select name="serie" id="serie" required>
-                <option selected disabled>Selecione</option>
-                <option value="1">1° Ano</option>
-                <option value="2">2° Ano</option>
-                <option value="3">3° Ano</option>
-            </select>
-            <br>
-
-            <label for="telefone_responsavel">Telefone do Responsável</label>
-            <input type="text" id="telefone_responsavel" name="tel_responsavel" required>
-
-            <button class="button_modal" type="submit">Salvar</button>
-            <button class="button_modal" type="button" onclick="this.closest('dialog').close()">Cancelar</button>
-        </form>
-    </dialog>
-
-    <!-- =================== MODAL DE EDIÇÃO (novo) =================== -->
-    <div class="modal fade" id="modalEditarAluno" tabindex="-1" aria-labelledby="modalEditarAlunoLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <form action="../../backend/edit_aluno.php" method="POST">
-            <div class="modal-header" style="background-color: rgb(9, 105, 9); color: #fff;">
-              <h5 class="modal-title" id="modalEditarAlunoLabel">Editar Aluno</h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" name="id_aluno" id="edit_aluno_id">
-
-              <div class="mb-3">
-                <label for="edit_aluno_nome" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="edit_aluno_nome" name="nome" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_matricula" class="form-label">Matrícula</label>
-                <input type="text" class="form-control" id="edit_aluno_matricula" name="matricula" required>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_curso" class="form-label">Curso</label>
-                <select class="form-select" id="edit_aluno_curso" name="curso" required>
-                  <option value="Enfermagem">Enfermagem</option>
-                  <option value="Informática">Informática</option>
-                  <option value="DS">Desenvolvimento de Sistemas</option>
-                  <option value="Adm">Administração</option>
-                  <option value="Comércio">Comércio</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_serie" class="form-label">Série</label>
-                <select class="form-select" id="edit_aluno_serie" name="serie" required>
-                  <option value="1">1° Ano</option>
-                  <option value="2">2° Ano</option>
-                  <option value="3">3° Ano</option>
-                </select>
-              </div>
-
-              <div class="mb-3">
-                <label for="edit_aluno_tel" class="form-label">Telefone do Responsável</label>
-                <input type="text" class="form-control" id="edit_aluno_tel" name="tel_responsavel" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-success">Salvar Alterações</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Bootstrap JS (necessário para o modal de edição) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -313,10 +216,10 @@ session_start();
         function toggleMenu() {
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
-
+            
             if (sidebar.classList.contains('active')) {
                 menuBtn.textContent = '✕';
-                menuBtn.style.backgroundColor = '#dc3545';
+                menuBtn.style.backgroundColor = '#dc3545'; 
                 menuBtn.style.color = 'rgb(255, 255, 255)';
             } else {
                 menuBtn.textContent = '☰';
@@ -333,7 +236,7 @@ session_start();
             }
         });
 
-        // Busca
+        // Função de busca
         function filterTable() {
             const input = document.getElementById("searchInput");
             const filter = input.value.toUpperCase();
@@ -345,12 +248,18 @@ session_start();
                 const tds = tr[i].getElementsByTagName("td");
                 for (let j = 0; j < tds.length - 1; j++) {
                     const td = tds[j];
-                    if (td && td.textContent.toUpperCase().indexOf(filter) > -1) {
-                        found = true;
-                        break;
+                    if (td) {
+                        if (td.textContent.toUpperCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
                     }
                 }
-                tr[i].style.display = found ? "" : "none";
+                if (found) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
         document.getElementById("searchInput").addEventListener("keyup", filterTable);
@@ -358,7 +267,10 @@ session_start();
         // Modal de Cadastro
         const botaoAbrir = document.getElementById('adicionar-aluno');
         const modal = document.getElementById('form_modal');
-        botaoAbrir.addEventListener('click', () => modal.showModal());
+
+        botaoAbrir.addEventListener('click', () => {
+            modal.showModal();
+        });
 
         // Modal de Edição - preencher campos
         document.querySelectorAll('.btn-editar-aluno').forEach(function (btn) {
