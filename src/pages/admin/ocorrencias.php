@@ -54,63 +54,65 @@ session_start();
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por qualquer informação da ocorrência">
     </div>
 
-    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <tr>
-            <th>Data</th>
-            <th>Tipo</th>
-            <th>Descrição</th>
-            <th>Aluno</th>
-            <th>Funcionário</th>
-            <th>Ações</th>
-        </tr>
+    <div class="table-responsive-container">
+        <table class="table table-striped">
+            <tr>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Aluno</th>
+                <th>Funcionário</th>
+                <th>Ações</th>
+            </tr>
 
-        <?php
-        $query = "SELECT o.id_ocorrencia, o.data, o.tipo_ocorrencia, o.descricao,
-                         o.fk_aluno_id_aluno, o.fk_funcionario_id_funcionario,
-                         a.nome AS nome_aluno, f.nome AS nome_funcionario
-                  FROM ocorrencia o
-                  INNER JOIN aluno a ON o.fk_aluno_id_aluno = a.id_aluno
-                  INNER JOIN funcionario f ON o.fk_funcionario_id_funcionario = f.id_funcionario
-                  ORDER BY o.data DESC";
+            <?php
+            $query = "SELECT o.id_ocorrencia, o.data, o.tipo_ocorrencia, o.descricao,
+                             o.fk_aluno_id_aluno, o.fk_funcionario_id_funcionario,
+                             a.nome AS nome_aluno, f.nome AS nome_funcionario
+                      FROM ocorrencia o
+                      INNER JOIN aluno a ON o.fk_aluno_id_aluno = a.id_aluno
+                      INNER JOIN funcionario f ON o.fk_funcionario_id_funcionario = f.id_funcionario
+                      ORDER BY o.data DESC";
 
-        $result = mysqli_query($conexao, $query);
+            $result = mysqli_query($conexao, $query);
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = $result->fetch_assoc()) {
-                ?>
-                <tr>
-                    <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
-                    <td><?= htmlspecialchars($row['tipo_ocorrencia']) ?></td>
-                    <td><?= htmlspecialchars($row['descricao']) ?></td>
-                    <td><?= htmlspecialchars($row['nome_aluno']) ?></td>
-                    <td><?= htmlspecialchars($row['nome_funcionario']) ?></td>
-                    <td>
-                        <button type="button"
-                                class="btn btn-warning btn-sm btn-editar-ocorrencia"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalEditarOcorrencia"
-                                data-id="<?= $row['id_ocorrencia'] ?>"
-                                data-data="<?= $row['data'] ?>"
-                                data-tipo="<?= htmlspecialchars($row['tipo_ocorrencia'], ENT_QUOTES) ?>"
-                                data-descricao="<?= htmlspecialchars($row['descricao'], ENT_QUOTES) ?>"
-                                data-aluno="<?= $row['fk_aluno_id_aluno'] ?>"
-                                data-funcionario="<?= $row['fk_funcionario_id_funcionario'] ?>">
-                            Editar
-                        </button>
-                        <a href="../../backend/deletar_ocorrencia.php?id=<?= $row['id_ocorrencia'] ?>"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Tem certeza que deseja remover esta ocorrência?');">
-                           Remover
-                        </a>
-                    </td>
-                </tr>
-                <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
+                        <td><?= htmlspecialchars($row['tipo_ocorrencia']) ?></td>
+                        <td><?= htmlspecialchars($row['descricao']) ?></td>
+                        <td><?= htmlspecialchars($row['nome_aluno']) ?></td>
+                        <td><?= htmlspecialchars($row['nome_funcionario']) ?></td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-warning btn-sm btn-editar-ocorrencia"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalEditarOcorrencia"
+                                    data-id="<?= $row['id_ocorrencia'] ?>"
+                                    data-data="<?= $row['data'] ?>"
+                                    data-tipo="<?= htmlspecialchars($row['tipo_ocorrencia'], ENT_QUOTES) ?>"
+                                    data-descricao="<?= htmlspecialchars($row['descricao'], ENT_QUOTES) ?>"
+                                    data-aluno="<?= $row['fk_aluno_id_aluno'] ?>"
+                                    data-funcionario="<?= $row['fk_funcionario_id_funcionario'] ?>">
+                                Editar
+                            </button>
+                            <a href="../../backend/deletar_ocorrencia.php?id=<?= $row['id_ocorrencia'] ?>"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Tem certeza que deseja remover esta ocorrência?');">
+                               Remover
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo "<tr><td colspan='6' class='text-center'>Nenhuma ocorrência cadastrada!</td></tr>";
             }
-        } else {
-            echo "<tr><td colspan='6' class='text-center'>Nenhuma ocorrência cadastrada!</td></tr>";
-        }
-        ?>
-    </table>
+            ?>
+        </table>
+    </div>
 
     <a href="tela_cad_ocorrencia.php"><button name="adicionar" id="adicionar-ocorrencia">+</button></a>
 

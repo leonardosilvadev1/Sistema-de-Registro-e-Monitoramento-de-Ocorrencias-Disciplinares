@@ -53,58 +53,157 @@ session_start();
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do aluno">
     </div>
 
-    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <tr>
-            <th>Nome</th>
-            <th>Matrícula</th>
-            <th>Curso</th>
-            <th>Série</th>
-            <th>Telefone do Responsável</th>
-            <th>Ações</th>
-        </tr>
+    <div class="table-responsive-container">
+        <table class="table table-striped">
+            <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Curso</th>
+                <th>Série</th>
+                <th>Telefone do Responsável</th>
+                <th>Ações</th>
+            </tr>
 
-        <?php
-        include('../../backend/database.php');
+            <?php
+            include('../../backend/database.php');
 
-        $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno WHERE serie BETWEEN 1 AND 3";
-        $result = mysqli_query($conexao, $query);
+            $query = "SELECT id_aluno, nome, matricula, curso, serie, telefone_responsavel FROM aluno WHERE serie BETWEEN 1 AND 3";
+            $result = mysqli_query($conexao, $query);
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = $result->fetch_assoc()) {
-                ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['nome']) ?></td>
-                    <td><?= htmlspecialchars($row['matricula']) ?></td>
-                    <td><?= htmlspecialchars($row['curso']) ?></td>
-                    <td><?= htmlspecialchars($row['serie']) ?>ºAno</td>
-                    <td><?= htmlspecialchars($row['telefone_responsavel']) ?></td>
-                    <td>
-                        <button type="button"
-                                class="btn btn-warning btn-sm btn-editar-aluno"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalEditarAluno"
-                                data-id="<?= $row['id_aluno'] ?>"
-                                data-nome="<?= htmlspecialchars($row['nome'], ENT_QUOTES) ?>"
-                                data-matricula="<?= htmlspecialchars($row['matricula'], ENT_QUOTES) ?>"
-                                data-curso="<?= htmlspecialchars($row['curso'], ENT_QUOTES) ?>"
-                                data-serie="<?= htmlspecialchars($row['serie'], ENT_QUOTES) ?>"
-                                data-tel="<?= htmlspecialchars($row['telefone_responsavel'], ENT_QUOTES) ?>">
-                            Editar
-                        </button>
-                        <a href="../../backend/deletar_aluno.php?id=<?= $row['id_aluno'] ?>"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Tem certeza que deseja remover este aluno?');">
-                           Remover
-                        </a>
-                    </td>
-                </tr>
-                <?php
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['nome']) ?></td>
+                        <td><?= htmlspecialchars($row['matricula']) ?></td>
+                        <td><?= htmlspecialchars($row['curso']) ?></td>
+                        <td><?= htmlspecialchars($row['serie']) ?>ºAno</td>
+                        <td><?= htmlspecialchars($row['telefone_responsavel']) ?></td>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-warning btn-sm btn-editar-aluno"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalEditarAluno"
+                                    data-id="<?= $row['id_aluno'] ?>"
+                                    data-nome="<?= htmlspecialchars($row['nome'], ENT_QUOTES) ?>"
+                                    data-matricula="<?= htmlspecialchars($row['matricula'], ENT_QUOTES) ?>"
+                                    data-curso="<?= htmlspecialchars($row['curso'], ENT_QUOTES) ?>"
+                                    data-serie="<?= htmlspecialchars($row['serie'], ENT_QUOTES) ?>"
+                                    data-tel="<?= htmlspecialchars($row['telefone_responsavel'], ENT_QUOTES) ?>">
+                                Editar
+                            </button>
+                            <a href="../../backend/deletar_aluno.php?id=<?= $row['id_aluno'] ?>"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Tem certeza que deseja remover este aluno?');">
+                               Remover
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo "<tr><td colspan='10'>Nenhum aluno cadastrado!</td></tr>";
             }
-        } else {
-            echo "<tr><td colspan='10'>Nenhum aluno cadastrado!</td></tr>";
-        }
-        ?>
-    </table>
+            ?>
+        </table>
+    </div>
+
+    <button name="adicionar" id="adicionar-aluno">+</button>
+
+    <!-- =================== MODAL DE CADASTRO (original) =================== -->
+    <dialog id="form_modal">
+        <form action="../../backend/cad_aluno.php" method="POST">
+            <label for="nome">Nome do Aluno</label>
+            <input type="text" id="nome" name="nome" required autofocus>
+            <br>
+
+            <label for="matricula">Número da Matrícula</label>
+            <input type="text" id="matricula" name="matricula" required>
+            <br>
+
+            <label for="curso">Curso</label>
+            <select name="curso" id="curso" required>
+                <option selected disabled>Selecione</option>
+                <option value="Enfermagem">Enfermagem</option>
+                <option value="Informática">Informática</option>
+                <option value="DS">Desenvolvimento de Sistemas</option>
+                <option value="Adm">Administração</option>
+                <option value="Comércio">Comércio</option>
+            </select>
+            <br>
+
+            <label for="serie">Série/Ano</label>
+            <select name="serie" id="serie" required>
+                <option selected disabled>Selecione</option>
+                <option value="1">1° Ano</option>
+                <option value="2">2° Ano</option>
+                <option value="3">3° Ano</option>
+            </select>
+            <br>
+
+            <label for="telefone_responsavel">Telefone do Responsável</label>
+            <input type="text" id="telefone_responsavel" name="tel_responsavel" required>
+
+            <button class="button_modal" type="submit">Salvar</button>
+            <button class="button_modal" type="button" onclick="this.closest('dialog').close()">Cancelar</button>
+        </form>
+    </dialog>
+
+    <!-- =================== MODAL DE EDIÇÃO (novo) =================== -->
+    <div class="modal fade" id="modalEditarAluno" tabindex="-1" aria-labelledby="modalEditarAlunoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form action="../../backend/edit_aluno.php" method="POST">
+            <div class="modal-header" style="background-color: rgb(9, 105, 9); color: #fff;">
+              <h5 class="modal-title" id="modalEditarAlunoLabel">Editar Aluno</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="id_aluno" id="edit_aluno_id">
+
+              <div class="mb-3">
+                <label for="edit_aluno_nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="edit_aluno_nome" name="nome" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_aluno_matricula" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" id="edit_aluno_matricula" name="matricula" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_aluno_curso" class="form-label">Curso</label>
+                <select class="form-select" id="edit_aluno_curso" name="curso" required>
+                  <option value="Enfermagem">Enfermagem</option>
+                  <option value="Informática">Informática</option>
+                  <option value="DS">Desenvolvimento de Sistemas</option>
+                  <option value="Adm">Administração</option>
+                  <option value="Comércio">Comércio</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_aluno_serie" class="form-label">Série</label>
+                <select class="form-select" id="edit_aluno_serie" name="serie" required>
+                  <option value="1">1° Ano</option>
+                  <option value="2">2° Ano</option>
+                  <option value="3">3° Ano</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_aluno_tel" class="form-label">Telefone do Responsável</label>
+                <input type="text" class="form-control" id="edit_aluno_tel" name="tel_responsavel" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success">Salvar Alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
     <button name="adicionar" id="adicionar-aluno">+</button>
 

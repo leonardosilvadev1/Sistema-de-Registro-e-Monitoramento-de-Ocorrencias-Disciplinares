@@ -49,67 +49,69 @@ session_start();
         <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do funcionário">
     </div>
 
-    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <tr>
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Email</th>
-            <th>Série/Curso (DT)</th>
-            <th>Ações</th>
-        </tr>
+    <div class="table-responsive-container">
+        <table class="table table-striped">
+            <tr>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Email</th>
+                <th>Série/Curso (DT)</th>
+                <th>Ações</th>
+            </tr>
 
-        <?php
-        include('../../backend/database.php');
+            <?php
+            include('../../backend/database.php');
 
-        $query = "SELECT id_funcionario, nome, cargo, email, serie, curso FROM funcionario";
-        $result = mysqli_query($conexao, $query);
+            $query = "SELECT id_funcionario, nome, cargo, email, serie, curso FROM funcionario";
+            $result = mysqli_query($conexao, $query);
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = $result->fetch_assoc()) {
-                ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['nome']) ?></td>
-                    <td><?= htmlspecialchars($row['cargo']) ?></td>
-                    <td><?= htmlspecialchars($row['email']) ?></td>
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row['nome']) ?></td>
+                        <td><?= htmlspecialchars($row['cargo']) ?></td>
+                        <td><?= htmlspecialchars($row['email']) ?></td>
 
-                    <td>
-                        <?php
-                        if ($row['cargo'] === 'DT') {
-                            echo htmlspecialchars($row['serie']) . 'º Ano - ' . htmlspecialchars($row['curso']);
-                        } else {
-                            echo '-';
-                        }
-                        ?>
-                    </td>
+                        <td>
+                            <?php
+                            if ($row['cargo'] === 'DT') {
+                                echo htmlspecialchars($row['serie']) . 'º Ano - ' . htmlspecialchars($row['curso']);
+                            } else {
+                                echo '-';
+                            }
+                            ?>
+                        </td>
 
-                    <td>
-                        <button type="button"
-                                class="btn btn-warning btn-sm btn-editar-funcionario"
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalEditarFuncionario"
-                                data-id="<?= $row['id_funcionario'] ?>"
-                                data-nome="<?= htmlspecialchars($row['nome'], ENT_QUOTES) ?>"
-                                data-cargo="<?= htmlspecialchars($row['cargo'], ENT_QUOTES) ?>"
-                                data-email="<?= htmlspecialchars($row['email'], ENT_QUOTES) ?>"
-                                data-serie="<?= htmlspecialchars($row['serie'] ?? '', ENT_QUOTES) ?>"
-                                data-curso="<?= htmlspecialchars($row['curso'] ?? '', ENT_QUOTES) ?>">
-                            Editar
-                        </button>
+                        <td>
+                            <button type="button"
+                                    class="btn btn-warning btn-sm btn-editar-funcionario"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalEditarFuncionario"
+                                    data-id="<?= $row['id_funcionario'] ?>"
+                                    data-nome="<?= htmlspecialchars($row['nome'], ENT_QUOTES) ?>"
+                                    data-cargo="<?= htmlspecialchars($row['cargo'], ENT_QUOTES) ?>"
+                                    data-email="<?= htmlspecialchars($row['email'], ENT_QUOTES) ?>"
+                                    data-serie="<?= htmlspecialchars($row['serie'] ?? '', ENT_QUOTES) ?>"
+                                    data-curso="<?= htmlspecialchars($row['curso'] ?? '', ENT_QUOTES) ?>">
+                                Editar
+                            </button>
 
-                        <a href="../../backend/deletar_func.php?id=<?= $row['id_funcionario'] ?>"
-                        class="btn btn-danger btn-sm"
-                        onclick="return confirm('Tem certeza que deseja remover este funcionário?');">
-                            Remover
-                        </a>
-                    </td>
-                </tr>
-                <?php
+                            <a href="../../backend/deletar_func.php?id=<?= $row['id_funcionario'] ?>"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Tem certeza que deseja remover este funcionário?');">
+                                Remover
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            } else {
+                echo "<tr><td colspan='10'>Nenhum funcionário cadastrado!</td></tr>";
             }
-        } else {
-            echo "<tr><td colspan='10'>Nenhum funcionário cadastrado!</td></tr>";
-        }
-        ?>
-    </table>
+            ?>
+        </table>
+    </div>
 
     <button name="adicionar" id="adicionar-funcionario">+</button>
 
