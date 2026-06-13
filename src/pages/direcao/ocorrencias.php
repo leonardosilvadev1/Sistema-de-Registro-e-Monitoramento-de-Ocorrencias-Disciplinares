@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../../backend/database.php');
     if(!isset($_SESSION['email']) || !isset($_SESSION['cargo'])){
         header('Location: ../tela_login.php');
         exit();
