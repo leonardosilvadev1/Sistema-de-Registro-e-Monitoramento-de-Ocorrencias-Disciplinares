@@ -67,8 +67,8 @@ Um sistema web simples para registrar, gerenciar e monitorar ocorrências discip
 ## Arquivos relevantes
 
 - [backend/cad_aluno.php](backend/cad_aluno.php) — cadastro de alunos
-- [backend/edit_aluno.php](backend/cad_funcionario.php) — cadastro de funcionários
-- [backend/deletar_aluno.php](pages/.../ocorrencias.php) — exibição de ocorrências
-- [backend/cad_funcionario.php](pages/.../dashboard.php) — dashboard do sistema
+- [backend/cad_funcionario.php](backend/cad_funcionario.php) — cadastro de funcionários
+- [pages/../ocorrencias.php](pages/.../ocorrencias.php) — exibição de ocorrências
+- [pages/.../dashboard.php](pages/.../dashboard.php) — dashboard do sistema
 - [backend/salvar_ocorrencia.php](backend/salvar_ocorrencia.php) — grava ocorrência
 - [backend/consultas.php](backend/consultas.php) — rotinas de consulta
