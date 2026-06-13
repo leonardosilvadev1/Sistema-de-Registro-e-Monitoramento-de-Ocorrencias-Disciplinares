@@ -26,26 +26,32 @@ $row = mysqli_fetch_assoc($result);
 if($row && password_verify($password, $row['senha'])){
     switch ($row['cargo']) {
         case 'Admin':
+            $_SESSION['nome'] = $row['nome'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['cargo'] = $row['cargo'];
             header('Location: ../pages/admin/painel_admin.php');
             exit();
             break;
         case 'Diretor':
+            $_SESSION['nome'] = $row['nome'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['cargo'] = $row['cargo'];
             header('Location: ../pages/direcao/painel_diretor.php');
             exit();
             break;
         case 'Coordenador':
+            $_SESSION['nome'] = $row['nome'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['cargo'] = $row['cargo'];
             header('Location: ../pages/coordenacao/painel_coordenador.php');
             exit();
             break;
         case 'DT':
+            $_SESSION['nome'] = $row['nome'];
             $_SESSION['email'] = $row['email'];
             $_SESSION['cargo'] = $row['cargo'];
+            $_SESSION['serie'] = $row['serie'];
+            $_SESSION['curso'] = $row['curso'];
             header('Location: ../pages/dt/painel_dt.php');
             exit();
             break;

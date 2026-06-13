@@ -17,11 +17,23 @@ include('database.php');
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    if ($cargo === 'DT') {
+        $serie = !empty($_POST['serie']) ? (int) $_POST['serie'] : null;
+        $curso = $_POST['curso'] ?? null;
+        if (empty($serie) || empty($curso)) {
+            $_SESSION['mensagem'] = "Para Diretor de Turma, informe série e curso!";
+            redirecionar_funcionarios();
+        }
+    } else {
+        $serie = null;
+        $curso = null;
+    }
+
     $senha_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = mysqli_prepare($conexao, "INSERT INTO funcionario (nome, cargo, email, senha) VALUES (?, ?, ?, ?)");
+    $stmt = mysqli_prepare($conexao, "INSERT INTO funcionario (nome, cargo, email, senha, serie, curso) VALUES (?, ?, ?, ?, ?, ?)");
 
-    mysqli_stmt_bind_param($stmt, "ssss", $nome, $cargo, $email, $senha_hash);
+    mysqli_stmt_bind_param($stmt, "ssssss", $nome, $cargo, $email, $senha_hash, $serie, $curso);
 
     if(mysqli_stmt_execute($stmt)){
         $_SESSION['mensagem'] = "Cadastro realizado com sucesso!";

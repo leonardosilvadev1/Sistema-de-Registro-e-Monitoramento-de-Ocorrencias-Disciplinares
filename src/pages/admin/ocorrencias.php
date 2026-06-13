@@ -4,6 +4,11 @@ session_start();
         header('Location: ../tela_login.php');
         exit();
     }
+    include('../../backend/database.php');
+
+    // Listas para popular os selects do modal de edição
+    $alunos_modal = mysqli_query($conexao, "SELECT id_aluno, nome FROM aluno ORDER BY nome");
+    $funcs_modal  = mysqli_query($conexao, "SELECT id_funcionario, nome FROM funcionario ORDER BY nome");
 ?>
 
 <!DOCTYPE html>
@@ -27,10 +32,7 @@ session_start();
 
         <div id="overlay"></div>
         <aside id="sidebar">
-            <div class="sidebar-header">
-                Menu Principal
-            </div>
-        
+            <div class="sidebar-header">Menu Principal</div>
             <nav class="sidebar-nav">
                 <a href="painel_admin.php">🏠 Início</a>
                 <a href="funcionarios.php">👥 Gerenciamento de Funcionários</a>
@@ -38,7 +40,6 @@ session_start();
                 <a href="ocorrencias.php">📝 Ocorrências</a>
                 <a href="alunos.php">🎓 Alunos</a>
             </nav>
-
             <div class="sidebar-footer">
                 <a href="../../backend/logout.php"><button class="logout-btn">Sair</button></a>
             </div>
@@ -48,60 +49,133 @@ session_start();
     <h2 style="color: rgb(9, 105, 9); text-align: center; margin-top: 20px;">
         Ocorrências Registradas
     </h2>
-    
+
     <div class="container mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por nome ou qualquer informação do funcionário">
+        <input type="text" id="searchInput" class="form-control" placeholder="Pesquisar por qualquer informação da ocorrência">
     </div>
 
-    <div class="table-responsive-container">
-        <table class="table table-striped" style="margin: 0; width: 100%;">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Tipo</th>
-                    <th>Descrição</th>
-                    <th>Aluno</th>
-                    <th>Funcionário</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                include('../../backend/database.php');
-                $query = "SELECT o.id_ocorrencia, o.data, o.tipo_ocorrencia, o.descricao, a.nome AS nome_aluno, f.nome AS nome_funcionario 
-                          FROM ocorrencia o 
-                          INNER JOIN aluno a ON o.fk_aluno_id_aluno = a.id_aluno 
-                          INNER JOIN funcionario f ON o.fk_funcionario_id_funcionario = f.id_funcionario
-                          ORDER BY o.data DESC";
-                
-                $result = mysqli_query($conexao, $query);
+    <table class="table table-striped" style="margin: 20px auto; width: 90%; border-radius: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <tr>
+            <th>Data</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+            <th>Aluno</th>
+            <th>Funcionário</th>
+            <th>Ações</th>
+        </tr>
 
-                if (mysqli_num_rows($result) > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                            echo "<td>".date('d/m/Y', strtotime($row['data']))."</td>";
-                            echo "<td>".$row['tipo_ocorrencia']."</td>";
-                            echo "<td>".$row['descricao']."</td>";
-                            echo "<td>".$row['nome_aluno']."</td>";
-                            echo "<td>".$row['nome_funcionario']."</td>";
-                            echo "<td>
-                                <a href='../../backend/deletar_ocorrencia.php?id=".$row['id_ocorrencia']."' 
-                                    class='btn btn-danger btn-sm'
-                                    onclick=\"return confirm('Tem certeza que deseja remover esta ocorrência?');\">
-                                    Remover
-                                </a>
-                            </td>";
-                        echo "</tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='6' class='text-center'>Nenhuma ocorrência cadastrada!</td></tr>";
-                }
+        <?php
+        $query = "SELECT o.id_ocorrencia, o.data, o.tipo_ocorrencia, o.descricao,
+                         o.fk_aluno_id_aluno, o.fk_funcionario_id_funcionario,
+                         a.nome AS nome_aluno, f.nome AS nome_funcionario
+                  FROM ocorrencia o
+                  INNER JOIN aluno a ON o.fk_aluno_id_aluno = a.id_aluno
+                  INNER JOIN funcionario f ON o.fk_funcionario_id_funcionario = f.id_funcionario
+                  ORDER BY o.data DESC";
+
+        $result = mysqli_query($conexao, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = $result->fetch_assoc()) {
                 ?>
-            </tbody>
-        </table>
-    </div>
+                <tr>
+                    <td><?= date('d/m/Y', strtotime($row['data'])) ?></td>
+                    <td><?= htmlspecialchars($row['tipo_ocorrencia']) ?></td>
+                    <td><?= htmlspecialchars($row['descricao']) ?></td>
+                    <td><?= htmlspecialchars($row['nome_aluno']) ?></td>
+                    <td><?= htmlspecialchars($row['nome_funcionario']) ?></td>
+                    <td>
+                        <button type="button"
+                                class="btn btn-warning btn-sm btn-editar-ocorrencia"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalEditarOcorrencia"
+                                data-id="<?= $row['id_ocorrencia'] ?>"
+                                data-data="<?= $row['data'] ?>"
+                                data-tipo="<?= htmlspecialchars($row['tipo_ocorrencia'], ENT_QUOTES) ?>"
+                                data-descricao="<?= htmlspecialchars($row['descricao'], ENT_QUOTES) ?>"
+                                data-aluno="<?= $row['fk_aluno_id_aluno'] ?>"
+                                data-funcionario="<?= $row['fk_funcionario_id_funcionario'] ?>">
+                            Editar
+                        </button>
+                        <a href="../../backend/deletar_ocorrencia.php?id=<?= $row['id_ocorrencia'] ?>"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Tem certeza que deseja remover esta ocorrência?');">
+                           Remover
+                        </a>
+                    </td>
+                </tr>
+                <?php
+            }
+        } else {
+            echo "<tr><td colspan='6' class='text-center'>Nenhuma ocorrência cadastrada!</td></tr>";
+        }
+        ?>
+    </table>
 
     <a href="tela_cad_ocorrencia.php"><button name="adicionar" id="adicionar-ocorrencia">+</button></a>
+
+    <!-- =================== MODAL DE EDIÇÃO =================== -->
+    <div class="modal fade" id="modalEditarOcorrencia" tabindex="-1" aria-labelledby="modalEditarOcorrenciaLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <form action="../../backend/edit_ocorrencia.php" method="POST">
+            <div class="modal-header" style="background-color: rgb(9, 105, 9); color: #fff;">
+              <h5 class="modal-title" id="modalEditarOcorrenciaLabel">Editar Ocorrência</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" name="id_ocorrencia" id="edit_oc_id">
+
+              <div class="mb-3">
+                <label for="edit_oc_data" class="form-label">Data</label>
+                <input type="date" class="form-control" id="edit_oc_data" name="data" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_oc_tipo" class="form-label">Tipo</label>
+                <select class="form-select" id="edit_oc_tipo" name="tipo" required>
+                  <option value="Leve">Leve</option>
+                  <option value="Média">Média</option>
+                  <option value="Grave">Grave</option>
+                  <option value="Gravíssima">Gravíssima</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_oc_descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" id="edit_oc_descricao" name="descricao" rows="3" required></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_oc_aluno" class="form-label">Aluno</label>
+                <select class="form-select" id="edit_oc_aluno" name="fk_aluno_id" required>
+                  <option value="">Selecione...</option>
+                  <?php while ($a = mysqli_fetch_assoc($alunos_modal)): ?>
+                    <option value="<?= $a['id_aluno'] ?>"><?= htmlspecialchars($a['nome']) ?></option>
+                  <?php endwhile; ?>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="edit_oc_func" class="form-label">Funcionário</label>
+                <select class="form-select" id="edit_oc_func" name="fk_funcionario_id" required>
+                  <option value="">Selecione...</option>
+                  <?php while ($f = mysqli_fetch_assoc($funcs_modal)): ?>
+                    <option value="<?= $f['id_funcionario'] ?>"><?= htmlspecialchars($f['nome']) ?></option>
+                  <?php endwhile; ?>
+                </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-success">Salvar Alterações</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const menuBtn = document.getElementById('menuBtn');
@@ -111,10 +185,9 @@ session_start();
         function toggleMenu() {
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
-            
             if (sidebar.classList.contains('active')) {
                 menuBtn.textContent = '✕';
-                menuBtn.style.backgroundColor = '#dc3545'; 
+                menuBtn.style.backgroundColor = '#dc3545';
                 menuBtn.style.color = 'rgb(255, 255, 255)';
             } else {
                 menuBtn.textContent = '☰';
@@ -122,45 +195,44 @@ session_start();
                 menuBtn.style.color = 'rgb(255, 255, 255)';
             }
         }
-
-        // Abrir/Fechar ao clicar no botão
         menuBtn.addEventListener('click', toggleMenu);
         overlay.addEventListener('click', toggleMenu);
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                toggleMenu();
-            }
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) toggleMenu();
         });
 
-        // Função de busca
         function filterTable() {
             const input = document.getElementById("searchInput");
             const filter = input.value.toUpperCase();
             const table = document.querySelector(".table");
             const tr = table.getElementsByTagName("tr");
-
             for (let i = 1; i < tr.length; i++) {
                 let found = false;
-
                 const tds = tr[i].getElementsByTagName("td");
                 for (let j = 0; j < tds.length - 1; j++) {
-                const td = tds[j];
-                    if (td) {
-                        if (td.textContent.toUpperCase().indexOf(filter) > -1) {
+                    const td = tds[j];
+                    if (td && td.textContent.toUpperCase().indexOf(filter) > -1) {
                         found = true;
                         break;
-                        }
                     }
                 }
-
-            if (found) {
-                tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
+                tr[i].style.display = found ? "" : "none";
             }
         }
         document.getElementById("searchInput").addEventListener("keyup", filterTable);
+
+        // Modal de edição - preencher campos
+        document.querySelectorAll('.btn-editar-ocorrencia').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                document.getElementById('edit_oc_id').value        = this.dataset.id || '';
+                document.getElementById('edit_oc_data').value      = this.dataset.data || '';
+                document.getElementById('edit_oc_tipo').value      = this.dataset.tipo || '';
+                document.getElementById('edit_oc_descricao').value = this.dataset.descricao || '';
+                document.getElementById('edit_oc_aluno').value     = this.dataset.aluno || '';
+                document.getElementById('edit_oc_func').value      = this.dataset.funcionario || '';
+            });
+        });
     </script>
 </body>
 </html>
+>>>>>>> developing_03

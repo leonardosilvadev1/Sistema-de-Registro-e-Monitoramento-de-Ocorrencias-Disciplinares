@@ -55,7 +55,8 @@ if($_SESSION['cargo'] == 'Admin'){
 } elseif($_SESSION['cargo'] == 'Diretor'){
     header('Location: ../pages/direcao/tela_cad_ocorrencia.php');
 } elseif($_SESSION['cargo'] == 'Coordenador'){
-    header('Location: ../pages/coordenacao/tela_cad_ocorrencias.php');
+    header('Location: ../pages/coordenacao/tela_cad_ocorrencia.php');
 }
 exit();
+>>>>>>> developing_03
 ?>
